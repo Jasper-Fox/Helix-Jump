@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class Player : MonoBehaviour
 {
@@ -13,13 +10,13 @@ public class Player : MonoBehaviour
 
     public void Bounce()
     {
-        rb.velocity = new Vector3(0, BounceStrength, 0);
+        rb.velocity = new Vector3(0, BounceStrength, 0); //сила вверх
     }
 
     public void Die()
     {
-        Game.playerDied();
-        rb.velocity = Vector3.zero;
+        Game.playerDied(); //сообщает игре что игрок умер
+        rb.velocity = Vector3.zero; //откдючает силу на всякий случай
     }
     
     public void Win()

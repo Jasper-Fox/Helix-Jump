@@ -1,26 +1,23 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Game : MonoBehaviour
 {
     public Controls Controls;
 
-    public enum State
+    public enum State //список состояний
     {
         Playing,
         Won,
         Loss,
     }
     
-    public State CurrentState { get; private set; }
+    public State CurrentState { get; private set; } //текущее состояние которое может изминять только этот код
 
     public void playerDied()
     {
-        if (CurrentState != State.Playing) return;
+        if (CurrentState != State.Playing) return; //проверка на то что смерть произошла во время игры
         CurrentState = State.Loss;
-        Controls.enabled = false;
+        Controls.enabled = false; //выключаем код отвечающий за управление
     }
 
     public void playerWin()

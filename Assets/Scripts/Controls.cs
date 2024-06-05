@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Controls : MonoBehaviour
@@ -16,10 +14,10 @@ public class Controls : MonoBehaviour
 
     private void Rotation()
     {
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0)) //если нажата лкм(0) 
         {
-            Vector3 delta = Input.mousePosition - _previousMousePosition;
-            Level.Rotate(0, -delta.x * RotationSpeed, 0);
+            Vector3 delta = _previousMousePosition - Input.mousePosition; //до места нажатия
+            Level.Rotate(0, delta.x * RotationSpeed, 0); //вращение по Y с указанной скоростью 
         }
 
         _previousMousePosition = Input.mousePosition;
