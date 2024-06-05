@@ -10,6 +10,8 @@ public class Sector : MonoBehaviour
     public Material GoodSectorColor;
     public Material BadSectorColor;
 
+    internal bool _wasCollision;
+
     private void Awake()
     {
         ChooseSectorMesh();
@@ -17,10 +19,15 @@ public class Sector : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(Bad);
         if (!collision.collider.TryGetComponent(out Player player)) return;// проверка на наличее у столкнувшегося объекта компонента Плеер,
                                                                            // при его наличии: ТРУ и в рлеер ссылка
         if (!VerticalPlane(collision)) return;
+        
+        if(!_wasCollision)
+        {
+            _wasCollision = true;
+            Debug.Log("Ударился" + _wasCollision);
+        }        
         if (Bad)
         {
             player.Die();

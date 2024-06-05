@@ -6,7 +6,8 @@ public class Player : MonoBehaviour
     public Rigidbody rb;
     public Game Game;
 
-    internal Platform CurrentPlatform;
+    internal Platform _currentPlatform;
+    internal int _numberOfSkippedPlatforms;
 
     public void Bounce()
     {

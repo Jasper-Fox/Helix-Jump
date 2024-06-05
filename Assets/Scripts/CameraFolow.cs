@@ -13,8 +13,22 @@ public class CameraFolow : MonoBehaviour
 
     private void CameraPosition()
     {
-        if(Player.CurrentPlatform == null) return; //чтобы небыло ушибок исключаем отсутствие значения в поле CurrentPlatform 
-        Vector3 targetPosition = StartCameraPosition + Player.CurrentPlatform.transform.position;
-        transform.position = Vector3.MoveTowards(transform.position, targetPosition, CameraSpeed * Time.deltaTime); //MoveTowards: из A в B со скоростью C
+        if(Player._currentPlatform == null) return; //чтобы небыло ошибок исключаем отсутствие значения в поле CurrentPlatform 
+        Vector3 targetPosition = StartCameraPosition + Player._currentPlatform.transform.position;
+        var cameraSpeed = CameraAcceleration();
+
+        transform.position = Vector3.MoveTowards(transform.position, targetPosition, cameraSpeed); //MoveTowards: из A в B со скоростью C
+    }
+
+    private float CameraAcceleration()
+    {
+        float cameraSpeed = CameraSpeed * Time.deltaTime;
+
+        if (Player._numberOfSkippedPlatforms > 1)
+        {
+            cameraSpeed *= Mathf.Log(Player._numberOfSkippedPlatforms) * 2f;
+        }
+
+        return cameraSpeed;
     }
 }
