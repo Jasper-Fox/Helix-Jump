@@ -929,7 +929,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 920146b372113be418f3d766070a1d23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BounceStrength: 12
+  BounceStrength: 3
   rb: {fileID: 620836697}
   Game: {fileID: 1326466333}
 --- !u!65 &620836699
@@ -1394,7 +1394,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Player: {fileID: 620836698}
   StartCameraPosition: {x: 0, y: 5.33, z: -18.11}
-  CameraSpeed: 20
+  CameraSpeed: 7
 --- !u!4 &1072715768 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6809881385943835636, guid: 3a47b640e1868ea489e4e24c6f5dd05f, type: 3}
