@@ -18,19 +18,27 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         _lastPosition = transform.position;
-        BrakingForce = 1 / (2 * MaxSpeed * MaxSpeed);
-        Debug.Log("Сопротивление" + BrakingForce);
+        
+        BrakingCalculation();
     }
 
     private void Update()
     {
+        SpeedСalculation();
+    }
+
+    private void SpeedСalculation()
+    {
         _speed = Mathf.Abs(_lastPosition.y - transform.position.y);
-        Debug.Log(_speed);
         if (_speed > MaxSpeed)
             rb.drag = _speed * BrakingForce;
         _lastPosition = transform.position;
     }
 
+    private void BrakingCalculation()
+    {
+        BrakingForce = 1 / (2 * MaxSpeed * MaxSpeed);
+    }
 
     public void Bounce()
     {

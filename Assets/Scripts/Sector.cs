@@ -23,10 +23,11 @@ public class Sector : MonoBehaviour
                                                                            // при его наличии: ТРУ и в рлеер ссылка
         if (!VerticalPlane(collision)) return;
         
-        if(!_wasCollision)
+        if(!_wasCollision) //запоминает что было столкновение
         {
             _wasCollision = true;
-        }        
+        } 
+        
         if (Bad)
         {
             player.Die();

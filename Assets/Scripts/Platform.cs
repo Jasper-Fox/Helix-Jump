@@ -21,19 +21,19 @@ public class Platform : MonoBehaviour
 
         CollisionLocationSearch();
 
-        if (_wasCollision)
+        if (_wasCollision) //если было столкновение обнуляет счетчик
         {
             player._numberOfSkippedPlatforms = 0;
         }
         else
-            player._numberOfSkippedPlatforms++;
+            player._numberOfSkippedPlatforms++; //иначе считает пролеты
     }
 
-    private void CollisionLocationSearch()
+    private void CollisionLocationSearch() //проверяет есть ли столькновение хоть с одним из секторов на этой платформе
     {
         for (int i = 0; i < ThisPlatformSector.Length; i++)
         {
-            if (ThisPlatformSector[i]._wasCollision)
+            if (ThisPlatformSector[i]._wasCollision) //если есть, записывает и выходит
             {
                 _wasCollision = true;
                 break;
