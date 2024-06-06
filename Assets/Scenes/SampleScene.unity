@@ -933,7 +933,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 920146b372113be418f3d766070a1d23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxSpeed: 0.7
+  MaxSpeed: 0.6
   BounceStrength: 12
   rb: {fileID: 620836697}
   Game: {fileID: 1326466333}

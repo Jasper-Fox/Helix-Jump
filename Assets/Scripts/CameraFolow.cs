@@ -21,15 +21,14 @@ public class CameraFolow : MonoBehaviour
         Vector3 targetPosition = StartCameraPosition + Player._currentPlatform.transform.position;
         var cameraSpeed = CameraAcceleration();
 
-        transform.position =
-            Vector3.MoveTowards(transform.position, targetPosition, cameraSpeed); //MoveTowards: из A в B со скоростью C
+        transform.position = Vector3.MoveTowards(transform.position, targetPosition, cameraSpeed); //MoveTowards: из A в B со скоростью C
     }
 
     private float CameraAcceleration()
     {
         float cameraSpeed = CameraSpeed * Time.deltaTime;
 
-        if (Player._numberOfSkippedPlatforms > 0 && Game.CurrentState == Game.State.Playing)
+        if (Player._numberOfSkippedPlatforms > 0 && Game.CurrentState == Game.State.Playing && Player._speed > Player.MaxSpeed)
         {
             cameraSpeed *= Mathf.Sqrt(t * Player._speed) * CameraAccelerationVolue;
         }
