@@ -12,28 +12,21 @@ public class Platform : MonoBehaviour
         if (other.TryGetComponent(out Player player)) //если в колайдер вошел игрок то ТРУ и ссылку на компонент в плеер
         {
             player._currentPlatform = this; //записываем эту платформу в текущую игрка 
-            
-            Debug.Log($"Вошел " + _wasCollision);
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.TryGetComponent(out Player player))
+        if (!other.TryGetComponent(out Player player)) return;
+
+        CollisionLocationSearch();
+
+        if (_wasCollision)
         {
-            CollisionLocationSearch();
-
-            if (_wasCollision)
-            {
-                player._numberOfSkippedPlatforms = 0;
-                Debug.Log("Обнуляемся");
-            }
-            else
-                player._numberOfSkippedPlatforms++;
-
-            Debug.Log("Вышел" + _wasCollision);
-            Debug.Log(player._numberOfSkippedPlatforms);
+            player._numberOfSkippedPlatforms = 0;
         }
+        else
+            player._numberOfSkippedPlatforms++;
     }
 
     private void CollisionLocationSearch()

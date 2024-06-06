@@ -26,7 +26,6 @@ public class Sector : MonoBehaviour
         if(!_wasCollision)
         {
             _wasCollision = true;
-            Debug.Log("Ударился" + _wasCollision);
         }        
         if (Bad)
         {
