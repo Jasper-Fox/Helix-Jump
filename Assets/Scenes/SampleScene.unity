@@ -867,8 +867,8 @@ MonoBehaviour:
   - {fileID: 1307884509984839580, guid: edf87ed228f289f45b21832a27e6e296, type: 3}
   StartPlatformPrefab: {fileID: 1307884509984839580, guid: b84f3fab9bc2db3479f8d429c9fce485, type: 3}
   FinishPlatformPrefab: {fileID: 945699968361322342, guid: faeaa54744007fb449f0add916d21164, type: 3}
-  MinPlatformCount: 5
-  MaxPlatformCount: 20
+  MinPlatformCount: 1
+  MaxPlatformCount: 2
   DistanceBetweenPlatforms: 8
 --- !u!1 &705507993
 GameObject:
@@ -1939,6 +1939,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2124231210}
+  - component: {fileID: 2124231211}
   m_Layer: 0
   m_Name: Cylinder Pivot
   m_TagString: Untagged
@@ -1962,6 +1963,19 @@ Transform:
   - {fileID: 541510796}
   m_Father: {fileID: 686926965}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2124231211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2124231209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42c7416100d26954c9830b02b6b92ae4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LevelGenetator: {fileID: 686926967}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

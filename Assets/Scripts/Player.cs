@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Enums;
 
 public class Player : MonoBehaviour
 {
@@ -42,7 +43,7 @@ public class Player : MonoBehaviour
 
     public void Bounce()
     {
-        if (Game.CurrentState == Game.State.Playing) //фикс бага с застреванием на границе киллзоны сектора
+        if (Game.CurrentState == GameState.Playing) //фикс бага с застреванием на границе киллзоны сектора
             rb.velocity = new Vector3(0, BounceStrength, 0); //сила вверх
     }
 

@@ -1,29 +1,23 @@
+using Enums;
 using UnityEngine;
 
 public class Game : MonoBehaviour
 {
     public Controls Controls;
-
-    public enum State //список состояний
-    {
-        Playing,
-        Won,
-        Loss,
-    }
     
-    public State CurrentState { get; private set; } //текущее состояние которое может изминять только этот код
+    public GameState CurrentState { get; private set; } //текущее состояние которое может изминять только этот код
 
     public void playerDied()
     {
-        if (CurrentState != State.Playing) return; //проверка на то что смерть произошла во время игры
-        CurrentState = State.Loss;
+        if (CurrentState != GameState.Playing) return; //проверка на то что смерть произошла во время игры
+        CurrentState = GameState.Loss;
         Controls.enabled = false; //выключаем код отвечающий за управление
     }
 
     public void playerWin()
     {
-        if (CurrentState != State.Playing) return;
-        CurrentState = State.Won;
+        if (CurrentState != GameState.Playing) return;
+        CurrentState = GameState.Won;
         Controls.enabled = false;
     }
 }

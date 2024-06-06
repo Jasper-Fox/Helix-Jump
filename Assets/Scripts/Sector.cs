@@ -1,3 +1,4 @@
+using Enums;
 using UnityEngine;
 
 public class Sector : MonoBehaviour
@@ -6,14 +7,7 @@ public class Sector : MonoBehaviour
         MaximumNormalVectorSlope =
             0.5f; //значение отвечающее за велечину наклона платформы от которой будет отскакивать игрок
 
-    public State CurrentState;
-
-    public enum State
-    {
-        Good,
-        Bad,
-        Null,
-    }
+    public SectorState CurrentState;
     public Mesh GoodSectorMesh;
     public Mesh BadSectorMesh;
     public Material GoodSectorColor;
@@ -32,14 +26,14 @@ public class Sector : MonoBehaviour
             return; // проверка на наличее у столкнувшегося объекта компонента Плеер,
         // при его наличии: ТРУ и в рлеер ссылка
         if (!VerticalPlane(collision)) return;
-        if(CurrentState == State.Null)return;
+        if (CurrentState == SectorState.Null) return;
 
         if (!_wasCollision) //запоминает что было столкновение
             _wasCollision = true;
-        
-        if (CurrentState == State.Bad)
+
+        if (CurrentState == SectorState.Bad)
             player.Die();
-        else if (CurrentState == State.Good)
+        else if (CurrentState == SectorState.Good)
             player.Bounce();
     }
 
@@ -63,25 +57,27 @@ public class Sector : MonoBehaviour
 
     private void ChooseSectorMesh()
     {
-        MeshFilter sectorMash = GetComponent<MeshFilter>(); //меш объекта (в онвалидейте вызывает кучу каких-то непонятных ошибок)
+        MeshFilter
+            sectorMash =
+                GetComponent<MeshFilter>(); //меш объекта (в онвалидейте вызывает кучу каких-то непонятных ошибок)
         Renderer sectorRenderer = GetComponent<Renderer>(); //материал объекта
         Collider collider = GetComponent<Collider>();
 
         if (GoodSectorMesh == null || BadSectorMesh == null) return; //проверка все ли поля заполнены 
 
-        if (CurrentState == State.Bad)
+        if (CurrentState == SectorState.Bad)
         {
             sectorMash.mesh = BadSectorMesh; //меняем меш
             sectorRenderer.sharedMaterial = BadSectorColor; //меняем материал
             collider.isTrigger = false;
         }
-        else if(CurrentState == State.Good)
+        else if (CurrentState == SectorState.Good)
         {
             sectorMash.mesh = GoodSectorMesh;
             sectorRenderer.sharedMaterial = GoodSectorColor;
             collider.isTrigger = false;
         }
-        else if (CurrentState == State.Null)
+        else if (CurrentState == SectorState.Null)
         {
             sectorMash.mesh = null;
             sectorRenderer.sharedMaterial = null;

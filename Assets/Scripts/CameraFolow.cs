@@ -1,4 +1,5 @@
 using UnityEngine;
+using Enums;
 
 public class CameraFolow : MonoBehaviour
 {
@@ -28,7 +29,7 @@ public class CameraFolow : MonoBehaviour
     {
         float cameraSpeed = CameraSpeed * Time.deltaTime; //сама скорость
 
-        if (Player._numberOfSkippedPlatforms > 0 && Game.CurrentState == Game.State.Playing && Player._speed > Player.MaxSpeed)
+        if (Player._numberOfSkippedPlatforms > 0 && Game.CurrentState == GameState.Playing && Player._speed > Player.MaxSpeed)
         {
             cameraSpeed *= Mathf.Sqrt(Mathf.Sqrt(t * Player._speed)) * CameraAccelerationVolue; //ускорение камеры по корню 
         }
