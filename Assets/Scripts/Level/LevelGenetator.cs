@@ -1,6 +1,4 @@
-﻿using System;
-using UnityEngine;
-using UnityEngine.Serialization;
+﻿using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class LevelGenetator : MonoBehaviour

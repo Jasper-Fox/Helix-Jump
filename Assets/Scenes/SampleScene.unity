@@ -408,7 +408,7 @@ Transform:
   m_GameObject: {fileID: 541510795}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -1, z: 0}
+  m_LocalPosition: {x: -0.02, y: -1, z: 0.04}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -867,8 +867,8 @@ MonoBehaviour:
   - {fileID: 1307884509984839580, guid: edf87ed228f289f45b21832a27e6e296, type: 3}
   StartPlatformPrefab: {fileID: 1307884509984839580, guid: b84f3fab9bc2db3479f8d429c9fce485, type: 3}
   FinishPlatformPrefab: {fileID: 945699968361322342, guid: faeaa54744007fb449f0add916d21164, type: 3}
-  MinPlatformCount: 1
-  MaxPlatformCount: 2
+  MinPlatformCount: 4
+  MaxPlatformCount: 20
   DistanceBetweenPlatforms: 8
 --- !u!1 &705507993
 GameObject:
