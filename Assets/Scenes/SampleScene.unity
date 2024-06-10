@@ -1336,7 +1336,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &430211092
 Transform:
   m_ObjectHideFlags: 0
@@ -2573,8 +2573,8 @@ MonoBehaviour:
   - {fileID: 1307884509984839580, guid: edf87ed228f289f45b21832a27e6e296, type: 3}
   StartPlatformPrefab: {fileID: 1307884509984839580, guid: b84f3fab9bc2db3479f8d429c9fce485, type: 3}
   FinishPlatformPrefab: {fileID: 945699968361322342, guid: faeaa54744007fb449f0add916d21164, type: 3}
-  MinPlatformCount: 0
-  MaxPlatformCount: 0
+  MinPlatformCount: 7
+  MaxPlatformCount: 30
   DistanceBetweenPlatforms: 8
 --- !u!1 &705507993
 GameObject:
@@ -3301,8 +3301,8 @@ MonoBehaviour:
   Game: {fileID: 1326466333}
   Player: {fileID: 620836698}
   StartCameraPosition: {x: 0, y: 5.33, z: -18.11}
-  CameraSpeed: 16
-  CameraAccelerationVolue: 8.5
+  CameraSpeed: 17
+  CameraAccelerationVolue: 8
 --- !u!4 &992288760 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6809881385943835636, guid: 3a47b640e1868ea489e4e24c6f5dd05f, type: 3}

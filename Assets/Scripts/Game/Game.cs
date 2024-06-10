@@ -4,7 +4,7 @@ using UnityEngine;
 public class Game : MonoBehaviour
 {
     public Controls Controls;
-    
+
     public GameState CurrentState { get; private set; } //текущее состояние которое может изминять только этот код
 
     public void playerDied()

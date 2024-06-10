@@ -21,7 +21,6 @@ public class Player : MonoBehaviour
         _lastPosition = transform.position;
 
         BrakingCalculation();
-        Debug.Log(rb.drag);
     }
 
     private void Update()

@@ -10,6 +10,7 @@ public class CameraFolow : MonoBehaviour
     public Vector3 StartCameraPosition;
     public float CameraSpeed;
     public float CameraAccelerationVolue;
+
     void Update()
     {
         CameraPosition();
@@ -22,14 +23,17 @@ public class CameraFolow : MonoBehaviour
         Vector3 targetPosition = StartCameraPosition + Player._currentPlatform.transform.position;
         float cameraSpeed = new float();
         cameraSpeed = CameraAcceleration(cameraSpeed);
-        transform.position = Vector3.MoveTowards(transform.position, targetPosition, cameraSpeed * Time.deltaTime); //MoveTowards: из A в B со скоростью C
+        transform.position =
+            Vector3.MoveTowards(transform.position, targetPosition,
+                cameraSpeed * Time.deltaTime); //MoveTowards: из A в B со скоростью C
     }
 
     private float CameraAcceleration(float cameraSpeed) //ускорение камеры при пропуске игроком платформ
     {
         cameraSpeed = CameraSpeed; //сама скорость
 
-        if (Player._numberOfSkippedPlatforms > 1 && Player._speed > Player.MaxSpeed && Game.CurrentState == GameState.Playing)
+        if (Player._numberOfSkippedPlatforms > 1 && Player._speed > Player.MaxSpeed &&
+            Game.CurrentState == GameState.Playing)
         {
             cameraSpeed *= Mathf.Abs(Player._speed) * CameraAccelerationVolue; //ускорение камеры 
         }
