@@ -14,12 +14,14 @@ public class Player : MonoBehaviour
 
     private Vector3 _lastPosition;
     private float BrakingForce;
+    private int i;
 
     private void Awake()
     {
         _lastPosition = transform.position;
-        
+
         BrakingCalculation();
+        Debug.Log(rb.drag);
     }
 
     private void Update()
@@ -29,15 +31,19 @@ public class Player : MonoBehaviour
 
     private void SpeedСalculation()
     {
-        _speed = Mathf.Abs(_lastPosition.y - transform.position.y);
+        _speed = _lastPosition.y - transform.position.y;
+
         if (_speed > MaxSpeed)
+        {
             rb.drag = _speed * BrakingForce;
+        }
+
         _lastPosition = transform.position;
     }
 
     private void BrakingCalculation()
     {
-        BrakingForce = 1 / (2 * MaxSpeed * MaxSpeed);
+        BrakingForce = 1 / (2 * MaxSpeed * MaxSpeed) + 0.2f;
     }
 
     public void Bounce()

@@ -34,7 +34,10 @@ public class Sector : MonoBehaviour
         if (CurrentState == SectorState.Bad)
             player.Die();
         else if (CurrentState == SectorState.Good)
+        {
             player.Bounce();
+            player.rb.drag = 0; //говорим игроку чтобы больше не тормозил
+        }
     }
 
     private bool VerticalPlane(Collision collision)

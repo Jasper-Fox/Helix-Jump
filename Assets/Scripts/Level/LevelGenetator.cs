@@ -21,7 +21,7 @@ public class LevelGenetator : MonoBehaviour
         {
             levelLenght = Random.Range(MinPlatformCount, MaxPlatformCount + 1);
             
-            BuildStart();
+          //  BuildStart();
             
             for (int i = 0; i < levelLenght - 1; i++)
             {
@@ -32,13 +32,13 @@ public class LevelGenetator : MonoBehaviour
                 Instantiate(PlatformPrefabs[platformIndex], position, rotation, transform);
             }
             
-            BuildFinish();
+          //  BuildFinish();
         }
 
         private void BuildFinish()
         {
-            Vector3 position = new Vector3(0, -DistanceBetweenPlatforms * levelLenght, 0);
-            Instantiate(FinishPlatformPrefab, position, new Quaternion(), transform);
+            FinishPlatformPrefab.transform.position = new Vector3(0, -DistanceBetweenPlatforms * levelLenght, 0);
+            Instantiate(FinishPlatformPrefab);
         }
 
         private void BuildStart()
