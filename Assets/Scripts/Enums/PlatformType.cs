@@ -1,6 +1,6 @@
 ﻿namespace Enums
 {
-    public enum PlatformState
+    public enum PlatformType
     {
         Bace,
         Start,

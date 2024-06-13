@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using Enums;
 using Random = UnityEngine.Random;
@@ -15,9 +14,11 @@ public class Platform : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent(out Player player)) //если в колайдер вошел игрок то ТРУ и ссылку на компонент в плеер
+        //если в колайдер вошел игрок то ТРУ и ссылку на компонент в плеер
+        if (other.TryGetComponent(out Player player))
         {
-            player._currentPlatform = this; //записываем эту платформу в текущую игрка 
+            //записываем эту платформу в текущую игрка 
+            player._currentPlatform = this; 
         }
     }
 
@@ -27,19 +28,23 @@ public class Platform : MonoBehaviour
 
         CollisionLocationSearch();
 
-        if (_wasCollision) //если было столкновение обнуляет счетчик
+        //если было столкновение обнуляет счетчик
+        if (_wasCollision) 
         {
             player._numberOfSkippedPlatforms = 0;
         }
         else
-            player._numberOfSkippedPlatforms++; //иначе считает пролеты
+            //иначе считает пролеты
+            player._numberOfSkippedPlatforms++;
     }
 
-    private void CollisionLocationSearch() //проверяет есть ли столькновение хоть с одним из секторов на этой платформе
+    //проверяет есть ли столькновение хоть с одним из секторов на этой платформе
+    private void CollisionLocationSearch() 
     {
         for (int i = 0; i < ThisPlatformSector.Length; i++)
         {
-            if (ThisPlatformSector[i]._wasCollision) //если есть, записывает и выходит
+            //если есть, записывает и выходит
+            if (ThisPlatformSector[i]._wasCollision) 
             {
                 _wasCollision = true;
                 break;
@@ -49,46 +54,68 @@ public class Platform : MonoBehaviour
         }
     }
 
-    private void BuildPlatform(GameObject platform, PlatformState currentState)
+    //строим платформу в данном месте данного типа
+    private void BuildPlatform(GameObject platform, PlatformType currentType)
     {
-        float platformRotation = Random.Range(0, 360);
+        //задаём случайный поворот начального сектора
+        float platformRotation = Random.Range(0, 360); 
+        
+        //заполняем все сектора
         for (int i = 0; i < _platform.Length; i++)
         {
+            //вставляем сектор
             _platform[i] = Sector;
 
+            //переиминовываем его
             _platform[i].name = $"Sector ({i})";
 
+            //достаём из него компонент сектора
             Sector sector = Sector.GetComponent<Sector>();
+            
+            //засовываем его в массим для проверки колизии
             ThisPlatformSector[i] = sector;
 
-            Quaternion rotation = new Quaternion();
-
-            if (currentState == PlatformState.Bace)
-            {
-                int stateIndex = Random.Range(0, 3);
-
-                if (stateIndex == 0)
-                    sector.CurrentState = SectorState.Good;
-                else if (stateIndex == 1)
-                    sector.CurrentState = SectorState.Bad;
-                else if (stateIndex == 2)
-                    sector.CurrentState = SectorState.Null;
-
-                rotation = Quaternion.Euler(-90, platformRotation + 45 * i, 0);
-            }
-            else
-            {
-                sector.CurrentState = SectorState.Good;
-
-                rotation = Quaternion.Euler(-90, -45 + 45 * i, 0);
-            }
-
+            //Устонавливаем тип сектора;
+            Quaternion rotation = SatSectorType(currentType, sector, platformRotation, i);
+            
+            //ставим его
             Instantiate(_platform[i], platform.transform.position, rotation, platform.transform);
         }
     }
 
-    public void LevelGenetatorBuildPlatform(GameObject platform, PlatformState currentState)
+    private static Quaternion SatSectorType(PlatformType currentType, Sector sector, float platformRotation, int i)
     {
-        BuildPlatform(platform, currentState);
+        Quaternion rotation;
+        
+        //Обычный -> Выбираем смлучайно один из трех типов секторов и случайный нальный поворот
+        if (currentType == PlatformType.Bace) 
+        {
+            int stateIndex = Random.Range(0, 3);
+
+            if (stateIndex == 0)
+                sector.currentType = SectorType.Good;
+            else if (stateIndex == 1)
+                sector.currentType = SectorType.Bad;
+            else if (stateIndex == 2)
+                sector.currentType = SectorType.Null;
+
+            rotation = Quaternion.Euler(-90, platformRotation + 45 * i, 0);
+        }
+        //если старт то все сектора хорошие и поворот постоянный
+        else
+        {
+            sector.currentType = SectorType.Good;
+
+            rotation = Quaternion.Euler(-90, -45 + 45 * i, 0);
+        }
+
+        return rotation;
+    }
+
+    //Костыль чтобы избавиться от бага, что цикл for в BuildPlatform, при вызове из LevelGenetator работает не больше 6ти раз
+    public void
+        LevelGenetatorBuildPlatform(GameObject platform, PlatformType currentType)
+    {
+        BuildPlatform(platform, currentType);
     }
 }

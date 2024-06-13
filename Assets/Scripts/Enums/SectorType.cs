@@ -1,6 +1,6 @@
 ﻿namespace Enums
 {
-    public enum SectorState
+    public enum SectorType
     {
         Good,
         Bad,

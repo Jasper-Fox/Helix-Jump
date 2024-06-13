@@ -14,10 +14,14 @@ public class Controls : MonoBehaviour
 
     private void Rotation()
     {
-        if (Input.GetMouseButton(0)) //если нажата лкм(0) 
+        //если нажата лкм(0) 
+        if (Input.GetMouseButton(0))
         {
-            Vector3 delta = _previousMousePosition - Input.mousePosition; //до места нажатия
-            Level.Rotate(0, delta.x * RotationSpeed, 0); //вращение по Y с указанной скоростью 
+            //до места нажатия
+            Vector3 delta = _previousMousePosition - Input.mousePosition;
+            
+            //вращение по Y с указанной скоростью 
+            Level.Rotate(0, delta.x * RotationSpeed, 0);
         }
 
         _previousMousePosition = Input.mousePosition;

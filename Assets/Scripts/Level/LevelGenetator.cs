@@ -5,7 +5,6 @@ using Random = UnityEngine.Random;
 public class LevelGenetator : MonoBehaviour
 {
     public GameObject Platform;
-    public GameObject StartPlatformPrefab;
     public GameObject FinishPlatformPrefab;
     public int MinPlatformCount;
     public int MaxPlatformCount;
@@ -22,24 +21,38 @@ public class LevelGenetator : MonoBehaviour
     {
         levelLenght = Random.Range(MinPlatformCount, MaxPlatformCount + 1);
 
+        //Строи уровень
         for (int i = 0; i < levelLenght; i++)
         {
+            //Куда ставим платформу
             Vector3 platformPosition = new Vector3(0, -DistanceBetweenPlatforms * i, 0);
+
+            //В го записываем установленную платформу на место, с поворотом и родителем
             GameObject go = Instantiate(Platform, platformPosition, new Quaternion(), transform);
-            Platform platform = go.GetComponent<Platform>();
-            if (i == 0)
-            {
-                go.name = "Start";
-                platform.LevelGenetatorBuildPlatform(go, PlatformState.Start);
-            }
-            else
-            {
-                go.name = $"Platform {i}";
-                platform.LevelGenetatorBuildPlatform(go, PlatformState.Bace);
-            }
+
+            ChoosePlatformType(i, go);
         }
 
+        //Строим финиш
         BuildFinish();
+    }
+
+    private static void ChoosePlatformType(int i, GameObject go)
+    {
+        //Достаём из го компанент платформа
+        Platform platform = go.GetComponent<Platform>();
+        
+        //если это первая платформа то строим старт
+        if (i == 0)
+        {
+            go.name = "Start";
+            platform.LevelGenetatorBuildPlatform(go, PlatformType.Start);
+        }
+        else
+        {
+            go.name = $"Platform {i}";
+            platform.LevelGenetatorBuildPlatform(go, PlatformType.Bace);
+        }
     }
 
     private void BuildFinish()

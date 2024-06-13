@@ -47,14 +47,19 @@ public class Player : MonoBehaviour
 
     public void Bounce()
     {
-        if (Game.CurrentState == GameState.Playing) //фикс бага с застреванием на границе киллзоны сектора
-            rb.velocity = new Vector3(0, BounceStrength, 0); //сила вверх
+        //фикс бага с застреванием на границе киллзоны сектора
+        if (Game.CurrentState == GameState.Playing)
+            //сила вверх
+            rb.velocity = new Vector3(0, BounceStrength, 0); 
     }
 
     public void Die()
     {
-        Game.playerDied(); //сообщает игре что игрок умер
-        rb.velocity = Vector3.zero; //откдючает силу на всякий случай
+        //сообщает игре что игрок умер
+        Game.playerDied();
+        
+        //откдючает силу на всякий случай
+        rb.velocity = Vector3.zero;
     }
 
     public void Win()

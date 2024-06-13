@@ -1,13 +1,13 @@
 using Enums;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Sector : MonoBehaviour
 {
-    const float
-        MaximumNormalVectorSlope =
-            0.5f; //значение отвечающее за велечину наклона платформы от которой будет отскакивать игрок
+    //значение отвечающее за велечину наклона платформы от которой будет отскакивать игрок
+    const float MaximumNormalVectorSlope = 0.5f;
 
-    public SectorState CurrentState;
+    [FormerlySerializedAs("currentTipe")] public SectorType currentType;
     public Mesh GoodSectorMesh;
     public Mesh BadSectorMesh;
     public Material GoodSectorColor;
@@ -22,65 +22,77 @@ public class Sector : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (!collision.collider.TryGetComponent(out Player player))
-            return; // проверка на наличее у столкнувшегося объекта компонента Плеер,
+        // проверка на наличее у столкнувшегося объекта компонента Плеер,
         // при его наличии: ТРУ и в рлеер ссылка
+        if (!collision.collider.TryGetComponent(out Player player)) return;
         if (!VerticalPlane(collision)) return;
-        if (CurrentState == SectorState.Null) return;
+        if (currentType == SectorType.Null) return;
 
-        if (!_wasCollision) //запоминает что было столкновение
+        //запоминает что было столкновение
+        if (!_wasCollision)
             _wasCollision = true;
 
-        if (CurrentState == SectorState.Bad)
+        if (currentType == SectorType.Bad)
             player.Die();
-        else if (CurrentState == SectorState.Good)
+        else if (currentType == SectorType.Good)
         {
             player.Bounce();
-            player.rb.drag = 0; //говорим игроку чтобы больше не тормозил
+
+            //говорим игроку чтобы больше не тормозил
+            player.rb.drag = 0;
         }
     }
 
     private bool VerticalPlane(Collision collision)
     {
-        Vector3
-            normal = -collision.contacts[0].normal
-                .normalized; //вектор из точки контакта, паралельнй нормали плоскости контакта длинной 1
-        float dot = Vector3.Dot(normal, Vector3.up); //сколярное произведение: 
+        //вектор из точки контакта, паралельнй нормали плоскости контакта длинной 1
+        Vector3 normal = -collision.contacts[0].normal.normalized;
+
+        //сколярное произведение: 
         //если вектор нормали совпадает с вектором вверх то 1,
         //чем больше несовпадение тем меньше значение (тк cos)
-        if (dot >= MaximumNormalVectorSlope) //разрешаем прыжок только при отклонении плоскости на 60'
+        float dot = Vector3.Dot(normal, Vector3.up);
+
+        //разрешаем прыжок только при отклонении плоскости на 60'
+        if (dot >= MaximumNormalVectorSlope)
             return true;
         return false;
     }
 
-    private void OnValidate() //для работы функции до нажатия плей
+    //для работы функции до нажатия плей
+    private void OnValidate()
     {
         ChooseSectorMesh();
     }
 
     private void ChooseSectorMesh()
     {
-        MeshFilter
-            sectorMash =
-                GetComponent<MeshFilter>(); //меш объекта (в онвалидейте вызывает кучу каких-то непонятных ошибок)
-        Renderer sectorRenderer = GetComponent<Renderer>(); //материал объекта
+        //меш объекта (в онвалидейте вызывает кучу каких-то непонятных ошибок)
+        MeshFilter sectorMash = GetComponent<MeshFilter>();
+
+        //материал объекта
+        Renderer sectorRenderer = GetComponent<Renderer>();
         Collider collider = GetComponent<Collider>();
 
-        if (GoodSectorMesh == null || BadSectorMesh == null) return; //проверка все ли поля заполнены 
+        //проверка все ли поля заполнены
+        if (GoodSectorMesh == null || BadSectorMesh == null) return;
 
-        if (CurrentState == SectorState.Bad)
+        if (currentType == SectorType.Bad)
         {
-            sectorMash.mesh = BadSectorMesh; //меняем меш
-            sectorRenderer.sharedMaterial = BadSectorColor; //меняем материал
+            //меняем меш
+            sectorMash.mesh = BadSectorMesh;
+
+            //меняем материал
+            sectorRenderer.sharedMaterial = BadSectorColor;
             collider.isTrigger = false;
         }
-        else if (CurrentState == SectorState.Good)
+        else if (currentType == SectorType.Good)
         {
             sectorMash.mesh = GoodSectorMesh;
             sectorRenderer.sharedMaterial = GoodSectorColor;
             collider.isTrigger = false;
         }
-        else if (CurrentState == SectorState.Null)
+        else if (currentType == SectorType.Null)
         {
             sectorMash.mesh = null;
             sectorRenderer.sharedMaterial = null;

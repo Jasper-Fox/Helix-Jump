@@ -4,14 +4,18 @@ using UnityEngine;
 public class Game : MonoBehaviour
 {
     public Controls Controls;
-
-    public GameState CurrentState { get; private set; } //текущее состояние которое может изминять только этот код
+    
+    //текущее состояние которое может изминять только этот код
+    public GameState CurrentState { get; private set; }
 
     public void playerDied()
     {
-        if (CurrentState != GameState.Playing) return; //проверка на то что смерть произошла во время игры
+        //проверка на то что смерть произошла во время игры
+        if (CurrentState != GameState.Playing) return; 
         CurrentState = GameState.Loss;
-        Controls.enabled = false; //выключаем код отвечающий за управление
+        
+        //выключаем код отвечающий за управление
+        Controls.enabled = false; 
     }
 
     public void playerWin()
