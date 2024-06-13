@@ -70,11 +70,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32e14e053be53e34e9b3ca1d90fd5bf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ThisPlatformSector:
-  - {fileID: 7471814561700077747}
-  - {fileID: 7968197288804570233}
-  - {fileID: 142909947669614799}
-  - {fileID: 594128506926856917}
+  Sector: {fileID: 0}
 --- !u!1001 &471128768663497493
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -127,6 +123,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -16.023987
       objectReference: {fileID: 0}
+    - target: {fileID: 1060331239017894336, guid: 46bf59bb796eec6419455d362dca128b, type: 3}
+      propertyPath: CurrentState
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3247371007791352568, guid: 46bf59bb796eec6419455d362dca128b, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 1149973307703454695, guid: d417222bc20148447bdef2d2a8c5eaba, type: 3}
+    - target: {fileID: 4216897203948999249, guid: 46bf59bb796eec6419455d362dca128b, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 705d8f7f69d237b45a39ab46e846755b, type: 2}
+    - target: {fileID: 5322259977033105943, guid: 46bf59bb796eec6419455d362dca128b, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7809078814675332040, guid: 46bf59bb796eec6419455d362dca128b, type: 3}
       propertyPath: m_Name
       value: Sector (2)
@@ -141,17 +153,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 102121391125882668, guid: 46bf59bb796eec6419455d362dca128b, type: 3}
   m_PrefabInstance: {fileID: 471128768663497493}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &594128506926856917 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1060331239017894336, guid: 46bf59bb796eec6419455d362dca128b, type: 3}
-  m_PrefabInstance: {fileID: 471128768663497493}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4e8b2e83f908614b9cc200e4948057a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1102461015177478415
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -204,6 +205,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 165.926
       objectReference: {fileID: 0}
+    - target: {fileID: 1060331239017894336, guid: 46bf59bb796eec6419455d362dca128b, type: 3}
+      propertyPath: CurrentState
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3247371007791352568, guid: 46bf59bb796eec6419455d362dca128b, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 1149973307703454695, guid: d417222bc20148447bdef2d2a8c5eaba, type: 3}
+    - target: {fileID: 4216897203948999249, guid: 46bf59bb796eec6419455d362dca128b, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 705d8f7f69d237b45a39ab46e846755b, type: 2}
+    - target: {fileID: 5322259977033105943, guid: 46bf59bb796eec6419455d362dca128b, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7809078814675332040, guid: 46bf59bb796eec6419455d362dca128b, type: 3}
       propertyPath: m_Name
       value: Sector (3)
@@ -213,17 +230,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 46bf59bb796eec6419455d362dca128b, type: 3}
---- !u!114 &142909947669614799 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1060331239017894336, guid: 46bf59bb796eec6419455d362dca128b, type: 3}
-  m_PrefabInstance: {fileID: 1102461015177478415}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4e8b2e83f908614b9cc200e4948057a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1019630660586317347 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 102121391125882668, guid: 46bf59bb796eec6419455d362dca128b, type: 3}
@@ -281,6 +287,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 165.936
       objectReference: {fileID: 0}
+    - target: {fileID: 1060331239017894336, guid: 46bf59bb796eec6419455d362dca128b, type: 3}
+      propertyPath: CurrentState
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3247371007791352568, guid: 46bf59bb796eec6419455d362dca128b, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 1149973307703454695, guid: d417222bc20148447bdef2d2a8c5eaba, type: 3}
+    - target: {fileID: 4216897203948999249, guid: 46bf59bb796eec6419455d362dca128b, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 705d8f7f69d237b45a39ab46e846755b, type: 2}
+    - target: {fileID: 5322259977033105943, guid: 46bf59bb796eec6419455d362dca128b, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7809078814675332040, guid: 46bf59bb796eec6419455d362dca128b, type: 3}
       propertyPath: m_Name
       value: Sector (1)
@@ -295,17 +317,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 102121391125882668, guid: 46bf59bb796eec6419455d362dca128b, type: 3}
   m_PrefabInstance: {fileID: 6927579196864857529}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7968197288804570233 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1060331239017894336, guid: 46bf59bb796eec6419455d362dca128b, type: 3}
-  m_PrefabInstance: {fileID: 6927579196864857529}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4e8b2e83f908614b9cc200e4948057a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &7567800431260217715
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -362,6 +373,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 74.399
       objectReference: {fileID: 0}
+    - target: {fileID: 1060331239017894336, guid: 46bf59bb796eec6419455d362dca128b, type: 3}
+      propertyPath: CurrentState
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3247371007791352568, guid: 46bf59bb796eec6419455d362dca128b, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 1149973307703454695, guid: d417222bc20148447bdef2d2a8c5eaba, type: 3}
+    - target: {fileID: 4216897203948999249, guid: 46bf59bb796eec6419455d362dca128b, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 705d8f7f69d237b45a39ab46e846755b, type: 2}
+    - target: {fileID: 5322259977033105943, guid: 46bf59bb796eec6419455d362dca128b, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7809078814675332040, guid: 46bf59bb796eec6419455d362dca128b, type: 3}
       propertyPath: m_Name
       value: Sector
@@ -371,17 +398,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 46bf59bb796eec6419455d362dca128b, type: 3}
---- !u!114 &7471814561700077747 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1060331239017894336, guid: 46bf59bb796eec6419455d362dca128b, type: 3}
-  m_PrefabInstance: {fileID: 7567800431260217715}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4e8b2e83f908614b9cc200e4948057a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &7524658149854729823 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 102121391125882668, guid: 46bf59bb796eec6419455d362dca128b, type: 3}

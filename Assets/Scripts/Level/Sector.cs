@@ -53,7 +53,7 @@ public class Sector : MonoBehaviour
         return false;
     }
 
-    private void OnValidate() //для рабы функции до нажатия плей
+    private void OnValidate() //для работы функции до нажатия плей
     {
         ChooseSectorMesh();
     }

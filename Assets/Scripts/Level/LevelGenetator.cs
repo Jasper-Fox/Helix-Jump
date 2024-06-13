@@ -1,9 +1,10 @@
-﻿using UnityEngine;
+﻿using Enums;
+using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class LevelGenetator : MonoBehaviour
 {
-    public GameObject[] PlatformPrefabs;
+    public GameObject Platform;
     public GameObject StartPlatformPrefab;
     public GameObject FinishPlatformPrefab;
     public int MinPlatformCount;
@@ -21,15 +22,21 @@ public class LevelGenetator : MonoBehaviour
     {
         levelLenght = Random.Range(MinPlatformCount, MaxPlatformCount + 1);
 
-        BuildStart();
-
-        for (int i = 0; i < levelLenght - 1; i++)
+        for (int i = 0; i < levelLenght; i++)
         {
-            int platformIndex = Random.Range(0, PlatformPrefabs.Length);
-            Vector3 position = new Vector3(0, -DistanceBetweenPlatforms * (i + 1), 0);
-            Quaternion rotation = Quaternion.Euler(0, Random.Range(0, 360f), 0);
-
-            Instantiate(PlatformPrefabs[platformIndex], position, rotation, transform);
+            Vector3 platformPosition = new Vector3(0, -DistanceBetweenPlatforms * i, 0);
+            GameObject go = Instantiate(Platform, platformPosition, new Quaternion(), transform);
+            Platform platform = go.GetComponent<Platform>();
+            if (i == 0)
+            {
+                go.name = "Start";
+                platform.LevelGenetatorBuildPlatform(go, PlatformState.Start);
+            }
+            else
+            {
+                go.name = $"Platform {i}";
+                platform.LevelGenetatorBuildPlatform(go, PlatformState.Bace);
+            }
         }
 
         BuildFinish();
@@ -39,10 +46,5 @@ public class LevelGenetator : MonoBehaviour
     {
         FinishPlatformPrefab.transform.position = new Vector3(0, -DistanceBetweenPlatforms * levelLenght, 0);
         Instantiate(FinishPlatformPrefab);
-    }
-
-    private void BuildStart()
-    {
-        Instantiate(StartPlatformPrefab, transform);
     }
 }
