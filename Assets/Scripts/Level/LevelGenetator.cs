@@ -46,12 +46,12 @@ public class LevelGenetator : MonoBehaviour
         if (i == 0)
         {
             go.name = "Start";
-            platform.LevelGenetatorBuildPlatform(go, PlatformType.Start);
+            platform.BuildPlatform(go, PlatformType.Start);
         }
         else
         {
-            go.name = $"Platform {i}";
-            platform.LevelGenetatorBuildPlatform(go, PlatformType.Bace);
+            go.name = $"Platform ({i})";
+            platform.BuildPlatform(go, PlatformType.Bace);
         }
     }
 

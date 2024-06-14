@@ -15,11 +15,6 @@ public class Sector : MonoBehaviour
 
     internal bool _wasCollision;
 
-    private void Awake()
-    {
-        ChooseSectorMesh();
-    }
-
     private void OnCollisionEnter(Collision collision)
     {
         // проверка на наличее у столкнувшегося объекта компонента Плеер,
@@ -65,7 +60,7 @@ public class Sector : MonoBehaviour
         ChooseSectorMesh();
     }
 
-    private void ChooseSectorMesh()
+    internal void ChooseSectorMesh()
     {
         //меш объекта (в онвалидейте вызывает кучу каких-то непонятных ошибок)
         MeshFilter sectorMash = GetComponent<MeshFilter>();
