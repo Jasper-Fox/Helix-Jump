@@ -1,7 +1,5 @@
 using UnityEngine;
 using Enums;
-using Unity.VisualScripting;
-using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class Platform : MonoBehaviour
@@ -9,7 +7,7 @@ public class Platform : MonoBehaviour
     private const int SectorsNumber = 7;
 
     public GameObject Sector;
-    
+
     [SerializeField] private Sector[] ThisPlatformSectors = new Sector[SectorsNumber];
     private bool _wasCollision;
 
@@ -61,29 +59,36 @@ public class Platform : MonoBehaviour
         //задаём случайный поворот начального сектора
         float platformRotation = Random.Range(0, 360);
 
-        //заполняем все сектора
-        for (int i = 0; i < ThisPlatformSectors.Length; i++)
+        //заполняем все сектора(на 2 цикла больше чтобы повторно проверить 0 и 1)
+        for (int i = 0; i < ThisPlatformSectors.Length + 2; i++)
         {
-            var rotation = SetFirstSectorPosition(currentType, platformRotation, i);
-
-            GameObject NewSector = Instantiate(Sector, platform.transform.position, rotation, platform.transform);
+            //контролируем чтоб и не вышло за массив
+            int ThisPlatformSectorsIndex = i % 7;
             
-            //переиминовываем его
-            NewSector.name = $"Sector ({i})";
+            //ставим пока не выйдет
+            if (i < ThisPlatformSectors.Length)
+            {
+                var rotation = SetFirstSectorPosition(currentType, platformRotation, i);
+                
+                //Устанавливаем новый сектор как сектор, на место платформы, с заданным поворотом и родителем платформой
+                GameObject NewSector = Instantiate(Sector, platform.transform.position, rotation, platform.transform);
 
-            //достаём из него компонент сектора
-            Sector sector = NewSector.GetComponent<Sector>();
+                //переиминовываем его
+                NewSector.name = $"Sector ({i})";
 
-            //засовываем его в массим для проверки колизии
-            ThisPlatformSectors[i] = sector;
-            
+                //достаём из него компонент сектора
+                Sector sector = NewSector.GetComponent<Sector>();
+
+                //засовываем его в массим для проверки колизии
+                ThisPlatformSectors[i] = sector;
+            }
+
             //Устонавливаем тип сектора;
-            SatSectorType(currentType, sector, i);
-
-            sector.ChooseSectorMesh();
+            SatSectorType(platform, currentType, ThisPlatformSectors[ThisPlatformSectorsIndex], i);
         }
     }
 
+    //случайный поворот платформ чтобы дырка не была на одной прямой
     private static Quaternion SetFirstSectorPosition(PlatformType currentType, float platformRotation, int i)
     {
         Quaternion rotation;
@@ -94,10 +99,10 @@ public class Platform : MonoBehaviour
         return rotation;
     }
 
-    private void SatSectorType(PlatformType currentType, Sector sector, int i)
+    private void SatSectorType(GameObject platform, PlatformType currentType, Sector sector, int i)
     {
         //Обычный -> Выбираем смлучайно один из трех типов секторов
-        if (currentType == PlatformType.Bace)
+        if (currentType == PlatformType.Bace && i < ThisPlatformSectors.Length)
         {
             int stateIndex = Random.Range(0, 3);
 
@@ -107,22 +112,35 @@ public class Platform : MonoBehaviour
                 sector.currentType = SectorType.Bad;
             else if (stateIndex == 2)
             {
-                if (i > 1 && ThisPlatformSectors[i - 1].currentType == SectorType.Null &&
-                    ThisPlatformSectors[i - 2].currentType == SectorType.Null)
-                {
-                    stateIndex = Random.Range(0, 2);
-                    if (stateIndex == 0)
-                        sector.currentType = SectorType.Good;
-                    else if (stateIndex == 1)
-                        sector.currentType = SectorType.Bad;
-                }
-                else
-                    sector.currentType = SectorType.Null;
+                sector.currentType = SectorType.Null;
             }
+            //Debug.Log($"{sector.name} = {sector.currentType}");
         }
         //если старт то все сектора хорошие
         else
             sector.currentType = SectorType.Good;
+
+        LimitNumberOfHoles(platform, sector, i);
+
+        sector.ChooseSectorMesh();
+    }
+
+    private void LimitNumberOfHoles(GameObject platform, Sector sector, int i)
+    {
+        if (i < 2) return;
+        int pre = (i - 1) % 7;
+        int prepre = (i - 2) % 7;
+        if (ThisPlatformSectors[pre].currentType == SectorType.Null &&
+            ThisPlatformSectors[prepre].currentType == SectorType.Null)
+        {
+            int stateIndex;
+            stateIndex = Random.Range(0, 2);
+            if (stateIndex == 0)
+                sector.currentType = SectorType.Good;
+            else if (stateIndex == 1)
+                sector.currentType = SectorType.Bad;
+            //Debug.Log($"В платфоре {platform.name} меняем сектор {sector.name} тк {ThisPlatformSectors[pre].name} = {ThisPlatformSectors[pre].currentType} и {ThisPlatformSectors[prepre].name} = {ThisPlatformSectors[prepre].currentType}");
+        }
     }
 
     //Костыль чтобы избавиться от бага, что цикл for в BuildPlatform, при вызове из LevelGenetator работает не больше 6ти раз

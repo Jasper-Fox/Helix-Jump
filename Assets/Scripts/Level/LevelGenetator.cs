@@ -26,7 +26,7 @@ public class LevelGenetator : MonoBehaviour
         {
             //Куда ставим платформу
             Vector3 platformPosition = new Vector3(0, -DistanceBetweenPlatforms * i, 0);
-
+            
             //В го записываем установленную платформу на место, с поворотом и родителем
             GameObject go = Instantiate(Platform, platformPosition, new Quaternion(), transform);
 
