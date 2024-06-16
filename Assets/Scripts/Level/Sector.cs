@@ -72,26 +72,28 @@ public class Sector : MonoBehaviour
         //проверка все ли поля заполнены
         if (GoodSectorMesh == null || BadSectorMesh == null) return;
 
-        if (currentType == SectorType.Bad)
+        switch (currentType)
         {
-            //меняем меш
-            sectorMash.mesh = BadSectorMesh;
+            case SectorType.Bad:
+                //меняем меш
+                sectorMash.mesh = BadSectorMesh;
 
-            //меняем материал
-            sectorRenderer.sharedMaterial = BadSectorColor;
-            collider.isTrigger = false;
-        }
-        else if (currentType == SectorType.Good)
-        {
-            sectorMash.mesh = GoodSectorMesh;
-            sectorRenderer.sharedMaterial = GoodSectorColor;
-            collider.isTrigger = false;
-        }
-        else if (currentType == SectorType.Null)
-        {
-            sectorMash.mesh = null;
-            sectorRenderer.sharedMaterial = null;
-            collider.isTrigger = true;
+                //меняем материал
+                sectorRenderer.sharedMaterial = BadSectorColor;
+                collider.isTrigger = false;
+                break;
+            
+            case SectorType.Good:
+                sectorMash.mesh = GoodSectorMesh;
+                sectorRenderer.sharedMaterial = GoodSectorColor;
+                collider.isTrigger = false;
+                break;
+            
+            case SectorType.Null:
+                sectorMash.mesh = null;
+                sectorRenderer.sharedMaterial = null;
+                collider.isTrigger = true;
+                break;
         }
     }
 }

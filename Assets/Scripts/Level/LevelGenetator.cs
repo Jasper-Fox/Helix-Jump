@@ -29,11 +29,10 @@ public class LevelGenetator : MonoBehaviour
             
             //В го записываем установленную платформу на место, с поворотом и родителем
             GameObject go = Instantiate(Platform, platformPosition, new Quaternion(), transform);
-
+            
             ChoosePlatformType(i, go);
         }
 
-        //Строим финиш
         BuildFinish();
     }
 
@@ -46,12 +45,20 @@ public class LevelGenetator : MonoBehaviour
         if (i == 0)
         {
             go.name = "Start";
+            
             platform.BuildPlatform(go, PlatformType.Start);
+            
+            go.transform.localRotation = new Quaternion();
         }
         else
         {
             go.name = $"Platform ({i})";
+            
             platform.BuildPlatform(go, PlatformType.Bace);
+            
+            //Случайный поворот платформы по Y
+            Quaternion platformRotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
+            go.transform.localRotation = platformRotation;
         }
     }
 
