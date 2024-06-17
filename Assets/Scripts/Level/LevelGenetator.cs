@@ -7,8 +7,8 @@ public class LevelGenetator : MonoBehaviour
     public GameObject Platform;
     public GameObject FinishPlatformPrefab;
     [Range(1f, 100.0f)] public int Difficulty;
-    public int MinPlatformCount;
-    public int MaxPlatformCount;
+    public int MinPlatformCount = 1;
+    public int MaxPlatformCount = 70;
     public float DistanceBetweenPlatforms;
 
     internal int levelLenght;
@@ -41,19 +41,35 @@ public class LevelGenetator : MonoBehaviour
         BuildFinish();
     }
 
+    //По фатку насколько венрхная граница отклоняется от нижней
     public float CalculateRandomRadius()
     {
         float randomRadius;
+
+        //Сама функция
         randomRadius = MaxPlatformCount / (MaxPlatformCount + _randomRadius) + 1;
         return randomRadius;
     }
 
+    //Функция по которой будут определяться границы
     private int CalculateRandomLimit(float difficulty)
     {
-        int result;
-        result = (int)(MinPlatformCount * MinPlatformCount / (difficulty / _randomOffset + MinPlatformCount) -
-                       MaxPlatformCount * (1 / (1 + difficulty / (MaxPlatformCount * _randomOffset)) - 1));
-        return result;
+        float result;
+        float offset;
+
+        //Доопределяем ноль на случай если и сложность и минимум будут 0
+        if (MinPlatformCount < 1)
+            offset = 0;
+        else
+            offset = MinPlatformCount * MinPlatformCount / (difficulty / _randomOffset + MinPlatformCount);
+
+        //Исключаем ошибку что минимум больше максимума
+        if (MinPlatformCount > MaxPlatformCount)
+            MinPlatformCount = MaxPlatformCount;
+        
+            //Её величество функция
+            result = offset - MaxPlatformCount * (1 / (1 + difficulty / (MaxPlatformCount * _randomOffset)) - 1);
+        return (int)result;
     }
 
     private static void ChoosePlatformType(int i, GameObject go)
