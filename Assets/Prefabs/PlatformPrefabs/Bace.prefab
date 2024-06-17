@@ -214,4 +214,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32e14e053be53e34e9b3ca1d90fd5bf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Game: {fileID: 0}
   Sector: {fileID: 7809078814675332040, guid: 46bf59bb796eec6419455d362dca128b, type: 3}
+  ThisPlatformSectors:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
