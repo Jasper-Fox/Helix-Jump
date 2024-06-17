@@ -6,11 +6,15 @@ public class LevelGenetator : MonoBehaviour
 {
     public GameObject Platform;
     public GameObject FinishPlatformPrefab;
+    [Range(1f, 100.0f)] public int Difficulty;
     public int MinPlatformCount;
     public int MaxPlatformCount;
     public float DistanceBetweenPlatforms;
 
     internal int levelLenght;
+
+    private float _randomOffset = 0.6f;
+    private float _randomRadius = 40;
 
     private void Awake()
     {
@@ -19,43 +23,59 @@ public class LevelGenetator : MonoBehaviour
 
     private void BuildLevel()
     {
-        levelLenght = Random.Range(MinPlatformCount, MaxPlatformCount + 1);
+        levelLenght = Random.Range(CalculateRandomLimit(Difficulty),
+            CalculateRandomLimit(Difficulty * CalculateRandomRadius()));
 
         //Строи уровень
         for (int i = 0; i < levelLenght; i++)
         {
             //Куда ставим платформу
             Vector3 platformPosition = new Vector3(0, -DistanceBetweenPlatforms * i, 0);
-            
+
             //В го записываем установленную платформу на место, с поворотом и родителем
             GameObject go = Instantiate(Platform, platformPosition, new Quaternion(), transform);
-            
+
             ChoosePlatformType(i, go);
         }
 
         BuildFinish();
     }
 
+    public float CalculateRandomRadius()
+    {
+        float randomRadius;
+        randomRadius = MaxPlatformCount / (MaxPlatformCount + _randomRadius) + 1;
+        return randomRadius;
+    }
+
+    private int CalculateRandomLimit(float difficulty)
+    {
+        int result;
+        result = (int)(MinPlatformCount * MinPlatformCount / (difficulty / _randomOffset + MinPlatformCount) -
+                       MaxPlatformCount * (1 / (1 + difficulty / (MaxPlatformCount * _randomOffset)) - 1));
+        return result;
+    }
+
     private static void ChoosePlatformType(int i, GameObject go)
     {
         //Достаём из го компанент платформа
         Platform platform = go.GetComponent<Platform>();
-        
+
         //если это первая платформа то строим старт
         if (i == 0)
         {
             go.name = "Start";
-            
+
             platform.BuildPlatform(go, PlatformType.Start);
-            
+
             go.transform.localRotation = new Quaternion();
         }
         else
         {
             go.name = $"Platform ({i})";
-            
+
             platform.BuildPlatform(go, PlatformType.Bace);
-            
+
             //Случайный поворот платформы по Y
             Quaternion platformRotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
             go.transform.localRotation = platformRotation;

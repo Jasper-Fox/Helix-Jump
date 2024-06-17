@@ -2566,8 +2566,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Platform: {fileID: 9099903764490241831, guid: 129390caecbb3914c9573bc6ca210ab3, type: 3}
   FinishPlatformPrefab: {fileID: 945699968361322342, guid: faeaa54744007fb449f0add916d21164, type: 3}
-  MinPlatformCount: 3
-  MaxPlatformCount: 3
+  Difficulty: 5
+  MinPlatformCount: 1
+  MaxPlatformCount: 70
   DistanceBetweenPlatforms: 8
 --- !u!1 &705507993
 GameObject:
