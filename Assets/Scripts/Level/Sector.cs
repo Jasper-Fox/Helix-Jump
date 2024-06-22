@@ -1,13 +1,12 @@
 using Enums;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class Sector : MonoBehaviour
 {
     //значение отвечающее за велечину наклона платформы от которой будет отскакивать игрок
     const float MaximumNormalVectorSlope = 0.5f;
 
-    [FormerlySerializedAs("currentTipe")] public SectorType currentType;
+    public SectorType currentType;
     public Mesh GoodSectorMesh;
     public Mesh BadSectorMesh;
     public Material GoodSectorColor;

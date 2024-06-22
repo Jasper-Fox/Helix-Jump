@@ -1,32 +1,39 @@
 ﻿using Enums;
 using UnityEngine;
 using Random = System.Random;
+using static MyRandom.MyRandomRange;
 
 public class LevelGenetator : MonoBehaviour
 {
+    private const float _randomOffsetForLevelLenght = 0.6f;
+    private const float _randomRadiusForLevelLenght = 40;
+
     public Game Game;
     public GameObject Platform;
     public GameObject FinishPlatformPrefab;
-    [Range(1f, 100.0f)] public int Difficulty;
+
     public int MinPlatformCount = 1;
     public int MaxPlatformCount = 70;
     public float DistanceBetweenPlatforms;
+    [Range(1, 1000)] public int LevelGenerationKey;
 
     internal int levelLenght;
 
-    private float _randomOffset = 0.6f;
-    private float _randomRadius = 40;
+    private int _difficulty = 5;
 
     private void Awake()
     {
-
         BuildLevel();
     }
 
     private void BuildLevel()
     {
-        Random random = new Random(Game.LevelIndex);
-        levelLenght = RandomRange(random, CalculateRandomLimit(Difficulty), CalculateRandomLimit(Difficulty * CalculateRandomRadius()));
+        CalculateDifficulty();
+
+        var random = LevelRandomKey();
+
+        levelLenght = RandomRange(random, CalculateRandomLimit(_difficulty),
+            CalculateRandomLimit(_difficulty * CalculateRandomRadius()));
 
         //Строи уровень
         for (int i = 0; i < levelLenght; i++)
@@ -36,11 +43,27 @@ public class LevelGenetator : MonoBehaviour
 
             //В го записываем установленную платформу на место, с поворотом и родителем
             GameObject go = Instantiate(Platform, platformPosition, new Quaternion(), transform);
-            
+
             ChoosePlatformType(random, i, go);
         }
 
         BuildFinish();
+    }
+
+    //создаём рандом со случайным ключем генерации
+    private Random LevelRandomKey()
+    {
+        Random levelKeyGenerator = new Random(LevelGenerationKey);
+
+        int levelGenerationKey = levelKeyGenerator.Next();
+
+        Random random = new Random(Game.LevelIndex + levelGenerationKey);
+        return random;
+    }
+
+    private void CalculateDifficulty()
+    {
+        _difficulty = Game.LevelIndex + 5;
     }
 
     //По фатку насколько венрхная граница отклоняется от нижней
@@ -49,7 +72,7 @@ public class LevelGenetator : MonoBehaviour
         float randomRadius;
 
         //Сама функция
-        randomRadius = MaxPlatformCount / (MaxPlatformCount + _randomRadius) + 1;
+        randomRadius = MaxPlatformCount / (MaxPlatformCount + _randomRadiusForLevelLenght) + 1;
         return randomRadius;
     }
 
@@ -63,14 +86,16 @@ public class LevelGenetator : MonoBehaviour
         if (MinPlatformCount < 1)
             offset = 0;
         else
-            offset = MinPlatformCount * MinPlatformCount / (difficulty / _randomOffset + MinPlatformCount);
+            offset = MinPlatformCount * MinPlatformCount /
+                     (difficulty / _randomOffsetForLevelLenght + MinPlatformCount);
 
         //Исключаем ошибку что минимум больше максимума
         if (MinPlatformCount > MaxPlatformCount)
             MinPlatformCount = MaxPlatformCount;
-        
-            //Её величество функция
-            result = offset - MaxPlatformCount * (1 / (1 + difficulty / (MaxPlatformCount * _randomOffset)) - 1);
+
+        //Её величество функция
+        result = offset - MaxPlatformCount *
+            (1 / (1 + difficulty / (MaxPlatformCount * _randomOffsetForLevelLenght)) - 1);
         return (int)result;
     }
 
@@ -84,7 +109,7 @@ public class LevelGenetator : MonoBehaviour
         {
             go.name = "Start";
 
-            platform.BuildPlatform(random, go, PlatformType.Start);
+            platform.BuildPlatform(random, Game.LevelIndex, go, PlatformType.Start);
 
             go.transform.localRotation = new Quaternion();
         }
@@ -92,7 +117,7 @@ public class LevelGenetator : MonoBehaviour
         {
             go.name = $"Platform ({i})";
 
-            platform.BuildPlatform(random, go, PlatformType.Bace);
+            platform.BuildPlatform(random, Game.LevelIndex, go, PlatformType.Bace);
 
             //Случайный поворот платформы по Y
             Quaternion platformRotation = Quaternion.Euler(0, RandomRange(random, 0, 360), 0);
@@ -104,22 +129,5 @@ public class LevelGenetator : MonoBehaviour
     {
         FinishPlatformPrefab.transform.position = new Vector3(0, -DistanceBetweenPlatforms * levelLenght, 0);
         Instantiate(FinishPlatformPrefab);
-    }
-
-    public static int RandomRange(Random random, int min, int maxExclusive)
-    {
-        int number = random.Next();
-        int radius = maxExclusive - min;
-        
-        number %= radius;
-        
-        return min + number;
-    }
-
-    public static float RandomRange(Random random, float min, float max)
-    {
-        float i = (float)random.NextDouble();
-
-        return Mathf.Lerp(min, max, i);
     }
 }

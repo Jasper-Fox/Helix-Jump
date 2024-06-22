@@ -1,9 +1,9 @@
-using UnityEngine;
+﻿using UnityEngine;
 using Enums;
 using Random = System.Random;
 using static MyRandom.MyRandomRange;
 
-public class Platform : MonoBehaviour
+public class PlatformGenerator : MonoBehaviour
 {
     private const int SectorsNumber = 7;
 
@@ -15,51 +15,8 @@ public class Platform : MonoBehaviour
     private Random _random;
     private float ratioOfGoodToBadPlatforms;
     private float holeRatio;
-
-    private void OnTriggerEnter(Collider other)
-    {
-        //если в колайдер вошел игрок то ТРУ и ссылку на компонент в плеер
-        if (other.TryGetComponent(out Player player))
-        {
-            //записываем эту платформу в текущую игрка 
-            player._currentPlatform = this;
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (!other.TryGetComponent(out Player player)) return;
-
-        CollisionLocationSearch();
-
-        //если было столкновение обнуляет счетчик
-        if (_wasCollision)
-        {
-            player._numberOfSkippedPlatforms = 0;
-        }
-        else
-            //иначе считает пролеты
-            player._numberOfSkippedPlatforms++;
-    }
-
-    //проверяет есть ли столькновение хоть с одним из секторов на этой платформе
-    private void CollisionLocationSearch()
-    {
-        for (int i = 0; i < ThisPlatformSectors.Length; i++)
-        {
-            //если есть, записывает и выходит
-            if (ThisPlatformSectors[i]._wasCollision)
-            {
-                _wasCollision = true;
-                break;
-            }
-
-            _wasCollision = false;
-        }
-    }
-
-    //строим платформу в данном месте данного типа из секторов
-    private void PlatformGenerator(Random random, int levelIndex, GameObject platform, PlatformType currentType)
+    
+    private void BuildPlatform(Random random, int levelIndex, GameObject platform, PlatformType currentType)
     {
         int holeСounter = 0;
         _random = random;
@@ -172,9 +129,9 @@ public class Platform : MonoBehaviour
         //Debug.Log($"В платфоре {platform.name} меняем сектор {sector.name} тк {ThisPlatformSectors[pre].name} = {ThisPlatformSectors[pre].currentType} и {ThisPlatformSectors[prepre].name} = {ThisPlatformSectors[prepre].currentType}");
     }
 
-    //Костыль чтобы избавиться от бага, что цикл for в BuildPlatform, при вызове из LevelGenetator работает не больше 6ти раз
-    public void BuildPlatform(Random random, int levelIndex, GameObject platform, PlatformType currentType)
-    {
-        PlatformGenerator(random, levelIndex, platform, currentType);
-    }
+    // //Костыль чтобы избавиться от бага, что цикл for в BuildPlatform, при вызове из LevelGenetator работает не больше 6ти раз
+    // public void BuildPlatform(Random random, int levelIndex, GameObject platform, PlatformType currentType)
+    // {
+    //     PlatformGenerator(random, levelIndex, platform, currentType);
+    // }
 }

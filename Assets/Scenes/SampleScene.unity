@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: 9ad5af014b9956743ad60a93036830d8, type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -2564,12 +2564,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1205586f673548a2ad7728fba547bb7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Game: {fileID: 1326466333}
   Platform: {fileID: 9099903764490241831, guid: 129390caecbb3914c9573bc6ca210ab3, type: 3}
   FinishPlatformPrefab: {fileID: 945699968361322342, guid: faeaa54744007fb449f0add916d21164, type: 3}
-  Difficulty: 5
   MinPlatformCount: 1
   MaxPlatformCount: 70
   DistanceBetweenPlatforms: 8
+  LevelGenerationKey: 1
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
