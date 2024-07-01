@@ -1,4 +1,5 @@
 using Enums;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Sector : MonoBehaviour
@@ -6,13 +7,15 @@ public class Sector : MonoBehaviour
     //значение отвечающее за велечину наклона платформы от которой будет отскакивать игрок
     const float MaximumNormalVectorSlope = 0.5f;
 
-    public SectorType currentType;
+    public SectorType CurrentType;
     public Mesh GoodSectorMesh;
     public Mesh BadSectorMesh;
     public Material GoodSectorColor;
     public Material BadSectorColor;
 
     internal bool _wasCollision;
+    internal Platform _currentPlatform;
+    internal int _numberOfSkippedPlatforms;
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -20,15 +23,23 @@ public class Sector : MonoBehaviour
         // при его наличии: ТРУ и в рлеер ссылка
         if (!collision.collider.TryGetComponent(out Player player)) return;
         if (!VerticalPlane(collision)) return;
-        if (currentType == SectorType.Null) return;
+        if (CurrentType == SectorType.Null) return;
 
-        //запоминает что было столкновение
-        if (!_wasCollision)
-            _wasCollision = true;
+        _currentPlatform._wasCollision = true;
 
-        if (currentType == SectorType.Bad)
+        if (_numberOfSkippedPlatforms > 1)
+        {
+            _currentPlatform.DestroyPlatform(true);
+            player.Bounce();
+
+            //говорим игроку чтобы больше не тормозил
+            player.rb.drag = 0;
+            return;
+        }
+
+        if (CurrentType == SectorType.Bad)
             player.Die();
-        else if (currentType == SectorType.Good)
+        else
         {
             player.Bounce();
 
@@ -71,7 +82,7 @@ public class Sector : MonoBehaviour
         //проверка все ли поля заполнены
         if (GoodSectorMesh == null || BadSectorMesh == null) return;
 
-        switch (currentType)
+        switch (CurrentType)
         {
             case SectorType.Bad:
                 //меняем меш
@@ -81,13 +92,13 @@ public class Sector : MonoBehaviour
                 sectorRenderer.sharedMaterial = BadSectorColor;
                 collider.isTrigger = false;
                 break;
-            
+
             case SectorType.Good:
                 sectorMash.mesh = GoodSectorMesh;
                 sectorRenderer.sharedMaterial = GoodSectorColor;
                 collider.isTrigger = false;
                 break;
-            
+
             case SectorType.Null:
                 sectorMash.mesh = null;
                 sectorRenderer.sharedMaterial = null;

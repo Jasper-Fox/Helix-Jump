@@ -29,7 +29,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -1.088, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 1
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7524658149854729823}
   - {fileID: 7010268772091224725}
@@ -57,7 +57,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 2.55, y: 1, z: 2.55}
-  m_Center: {x: 0, y: 0.45, z: 0}
+  m_Center: {x: 0, y: 0.35, z: 0}
 --- !u!114 &561298550389406404
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70,15 +70,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32e14e053be53e34e9b3ca1d90fd5bf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Sector: {fileID: 0}
-  ThisPlatformSectors:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  _platformGenerator: {fileID: 0}
 --- !u!1001 &471128768663497493
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -138,11 +130,11 @@ PrefabInstance:
     - target: {fileID: 3247371007791352568, guid: 46bf59bb796eec6419455d362dca128b, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: -3006688920275969777, guid: dc0f76852e366fa4586e1f8ba1474e8c, type: 3}
+      objectReference: {fileID: 1149973307703454695, guid: d417222bc20148447bdef2d2a8c5eaba, type: 3}
     - target: {fileID: 4216897203948999249, guid: 46bf59bb796eec6419455d362dca128b, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 8470f53f3b1c2444cbe5394dbae94abb, type: 2}
+      objectReference: {fileID: 2100000, guid: 705d8f7f69d237b45a39ab46e846755b, type: 2}
     - target: {fileID: 5322259977033105943, guid: 46bf59bb796eec6419455d362dca128b, type: 3}
       propertyPath: m_IsTrigger
       value: 0
@@ -220,11 +212,11 @@ PrefabInstance:
     - target: {fileID: 3247371007791352568, guid: 46bf59bb796eec6419455d362dca128b, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: -3006688920275969777, guid: dc0f76852e366fa4586e1f8ba1474e8c, type: 3}
+      objectReference: {fileID: 1149973307703454695, guid: d417222bc20148447bdef2d2a8c5eaba, type: 3}
     - target: {fileID: 4216897203948999249, guid: 46bf59bb796eec6419455d362dca128b, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 8470f53f3b1c2444cbe5394dbae94abb, type: 2}
+      objectReference: {fileID: 2100000, guid: 705d8f7f69d237b45a39ab46e846755b, type: 2}
     - target: {fileID: 5322259977033105943, guid: 46bf59bb796eec6419455d362dca128b, type: 3}
       propertyPath: m_IsTrigger
       value: 0
@@ -302,11 +294,11 @@ PrefabInstance:
     - target: {fileID: 3247371007791352568, guid: 46bf59bb796eec6419455d362dca128b, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: -3006688920275969777, guid: dc0f76852e366fa4586e1f8ba1474e8c, type: 3}
+      objectReference: {fileID: 1149973307703454695, guid: d417222bc20148447bdef2d2a8c5eaba, type: 3}
     - target: {fileID: 4216897203948999249, guid: 46bf59bb796eec6419455d362dca128b, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 8470f53f3b1c2444cbe5394dbae94abb, type: 2}
+      objectReference: {fileID: 2100000, guid: 705d8f7f69d237b45a39ab46e846755b, type: 2}
     - target: {fileID: 5322259977033105943, guid: 46bf59bb796eec6419455d362dca128b, type: 3}
       propertyPath: m_IsTrigger
       value: 0
@@ -388,11 +380,11 @@ PrefabInstance:
     - target: {fileID: 3247371007791352568, guid: 46bf59bb796eec6419455d362dca128b, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: -3006688920275969777, guid: dc0f76852e366fa4586e1f8ba1474e8c, type: 3}
+      objectReference: {fileID: 1149973307703454695, guid: d417222bc20148447bdef2d2a8c5eaba, type: 3}
     - target: {fileID: 4216897203948999249, guid: 46bf59bb796eec6419455d362dca128b, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 8470f53f3b1c2444cbe5394dbae94abb, type: 2}
+      objectReference: {fileID: 2100000, guid: 705d8f7f69d237b45a39ab46e846755b, type: 2}
     - target: {fileID: 5322259977033105943, guid: 46bf59bb796eec6419455d362dca128b, type: 3}
       propertyPath: m_IsTrigger
       value: 0

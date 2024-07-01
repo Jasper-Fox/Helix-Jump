@@ -11,6 +11,9 @@ public class Game : MonoBehaviour
     //текущее состояние которое может изминять только этот код
     public GameState CurrentState { get; private set; }
 
+    /// <summary>
+    /// Номер уровня запоминается в плеер префс и сохраняется при перезагрузке сцены. Через гет и сет достаём и назначаем значение
+    /// </summary>
     public int LevelIndex
     {
         get => PlayerPrefs.GetInt(LevelIndexKey, 0);
@@ -20,6 +23,7 @@ public class Game : MonoBehaviour
            PlayerPrefs.Save();
         }
     }
+    
     public void playerDied()
     {
         //проверка на то что смерть произошла во время игры

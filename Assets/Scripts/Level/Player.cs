@@ -3,18 +3,29 @@ using Enums;
 
 public class Player : MonoBehaviour
 {
+    private const string _numberOfPassedPlatforms = "numberOfPassedPlatforms";
+    
     public float MaxSpeed;
     public float BounceStrength;
     public Rigidbody rb;
     public Game Game;
-
-    internal Platform _currentPlatform;
+    
     internal int _numberOfSkippedPlatforms;
     internal float _speed;
-
-    private Vector3 _lastPosition;
+    internal Platform _currentPlatform;
+    
     private float BrakingForce;
-    private int i;
+    private Vector3 _lastPosition;
+
+    public int NumberOfPassedPlatforms
+    {
+        get => PlayerPrefs.GetInt(_numberOfPassedPlatforms, 0);
+        set
+        {
+            PlayerPrefs.SetInt(_numberOfPassedPlatforms, value);
+            PlayerPrefs.Save();
+        } 
+    }
 
     private void Awake()
     {
@@ -60,6 +71,9 @@ public class Player : MonoBehaviour
         
         //откдючает силу на всякий случай
         rb.velocity = Vector3.zero;
+
+        //Обнуляет счетчик очков
+        NumberOfPassedPlatforms = 0;
     }
 
     public void Win()

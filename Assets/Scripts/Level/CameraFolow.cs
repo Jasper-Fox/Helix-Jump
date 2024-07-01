@@ -3,8 +3,6 @@ using Enums;
 
 public class CameraFolow : MonoBehaviour
 {
-    public const float t = 40;
-
     public Game Game;
     public Player Player;
     public Vector3 StartCameraPosition;
