@@ -22,6 +22,11 @@ public class ProcessBar : MonoBehaviour
     void Update()
     {
         SliderValue();
+        if (Slider.value == 1)
+        {
+           Image[] image = gameObject.GetComponentsInChildren<Image>();
+               image[3].color = new Color(1, 0.8476985f, 0.06132078f);
+        }
     }
 
     private void SliderValue()

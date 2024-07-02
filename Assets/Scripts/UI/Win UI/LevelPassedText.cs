@@ -6,8 +6,8 @@ public class LevelPassedText : MonoBehaviour
     [SerializeField] private Text _text;
     [SerializeField] private Game _game;
 
-    private void Start()
+    private void OnEnable()
     {
-        _text.text = $"Level {_game.LevelIndex} Passed";
+        _text.text = $"Level {_game.LevelIndex + 1} Passed";
     }
 }

@@ -8350,7 +8350,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _game: {fileID: 1326466333}
   _text: {fileID: 1972033048}
-  _nextLevelScoreboard: {fileID: 267435044}
+  _nextLevelScoreboardText: {fileID: 267435046}
 --- !u!1 &1975588539
 GameObject:
   m_ObjectHideFlags: 0
