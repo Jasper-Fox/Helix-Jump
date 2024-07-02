@@ -11,6 +11,7 @@ public class SoundControl : MonoBehaviour
     [SerializeField] private Sprite _onSounds;
     [SerializeField] private Sprite _offSounds;
     [Min(0)][SerializeField] private float _lerpMuteSpeed = 0.001f;
+    [SerializeField] private AudioClip _click;
     
     internal bool _lerpMute;
 
@@ -44,17 +45,22 @@ public class SoundControl : MonoBehaviour
 
     private void MuteAudio()
     {
-        if (_audioSource.volume > 0)
+        if (!_audioSource.mute)
         {
-            _audioSource.volume = 0;
+            _audioSource.mute = true;
             _image.sprite = _offSounds;
             SoundState = 0;
         }
         else
         {
-            _audioSource.volume = 0.1f;
+            _audioSource.mute = false;
             _image.sprite = _onSounds;
             SoundState = 1;
         }
+    }
+
+    public void Click()
+    {
+        _audioSource.PlayOneShot(_click);
     }
 }

@@ -31,6 +31,7 @@ public class Sector : MonoBehaviour
         _currentPlatform._wasCollision = true;
 
         _audio.volume = player._soundControl.volume;
+        _audio.mute = player._soundControl.mute;
         
         if (_numberOfSkippedPlatforms > 2 || CurrentType == SectorType.Good)
         {
