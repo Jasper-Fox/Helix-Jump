@@ -15,7 +15,7 @@ public class LevelGenerator : MonoBehaviour
     public int MinPlatformCount = 1;
     public int MaxPlatformCount = 70;
     public float DistanceBetweenPlatforms;
-    [Range(1, 1000)] public int LevelGenerationKey;
+    [Min(1)] public int LevelGenerationKey;
 
     internal int levelLenght;
 

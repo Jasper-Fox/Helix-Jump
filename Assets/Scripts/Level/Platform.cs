@@ -15,7 +15,7 @@ public class Platform : MonoBehaviour
     {
         //если в колайдер вошел игрок то ТРУ и ссылку на компонент в плеер
         if (!other.TryGetComponent(out Player player)) return;
-        
+
         //записываем эту платформу в текущую игрка 
         player._currentPlatform = this;
         _wasCollision = false;
@@ -70,7 +70,7 @@ public class Platform : MonoBehaviour
                 torqueDirection = transform.TransformDirection(Vector3.left);
                 ImpactStrength *= -1;
                 RachletStrength = (int)(RachletStrength * 0.5);
-                
+
                 _platformGenerator._thisPlatformSectors[i].GameObject().GetComponent<Renderer>().sharedMaterial =
                     _playerMaterial;
             }

@@ -18,7 +18,7 @@ public class PlatformGenerator : MonoBehaviour
     private Random _random;
     private float ratioOfGoodToBadPlatforms;
     private float holeRatio;
-
+    
     /// <summary>
     /// Строит платформу в данном месте данного типа из секторов
     /// </summary>
@@ -55,19 +55,24 @@ public class PlatformGenerator : MonoBehaviour
             var rotation = SectorRotation(i);
 
             //Устанавливаем новый сектор как сектор, на место платформы, с заданным поворотом и родителем платформой
-            GameObject NewSector = Instantiate(_sector, platform.transform.position, rotation, platform.transform);
+            GameObject newSector = Instantiate(_sector, platform.transform.position, rotation, platform.transform);
 
             //переиминовываем его
-            NewSector.name = $"Sector ({i})";
-
+            newSector.name = $"Sector ({i})";
+            
             //достаём из него компонент сектора
-            Sector sector = NewSector.GetComponent<Sector>();
+            Sector sector = newSector.GetComponent<Sector>();
 
             //засовываем его в массим для проверки колизии
             _thisPlatformSectors[i] = sector;
         }
 
         SatSectorType(currentType, _thisPlatformSectors[thisPlatformSectorsIndex], i, ref holeСounter);
+    }
+
+    public void A(ref float a)
+    {
+        
     }
 
     /// <summary>

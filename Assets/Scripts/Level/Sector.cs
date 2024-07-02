@@ -11,11 +11,15 @@ public class Sector : MonoBehaviour
     public Mesh BadSectorMesh;
     public Material GoodSectorColor;
     public Material BadSectorColor;
+    [SerializeField] private AudioSource _audio;
+    [SerializeField] private AudioClip _collisionSound;
+    [SerializeField] private AudioClip _destructionSound;
+    
 
     internal bool _wasCollision;
     internal Platform _currentPlatform;
     internal int _numberOfSkippedPlatforms;
-
+    
     private void OnCollisionEnter(Collision collision)
     {
         // проверка на наличее у столкнувшегося объекта компонента Плеер,
@@ -23,20 +27,33 @@ public class Sector : MonoBehaviour
         if (!collision.collider.TryGetComponent(out Player player)) return;
         if (!VerticalPlane(collision)) return;
         if (CurrentType == SectorType.Null) return;
-
+        
         _currentPlatform._wasCollision = true;
 
+        _audio.volume = player._soundControl.volume;
+        
         if (_numberOfSkippedPlatforms > 2 || CurrentType == SectorType.Good)
         {
             if (_numberOfSkippedPlatforms > 2)
+            {
                 _currentPlatform.DestroyPlatform(true);
+                
+                _audio.PlayOneShot(_destructionSound);
+            }
+            else
+                _audio.PlayOneShot(_collisionSound);
+                
             player.Bounce();
 
             //говорим игроку чтобы больше не тормозил
             player.rb.drag = 0;
         }
         else
+        {
+            _audio.PlayOneShot(_collisionSound);
+
             player.Die();
+        }
     }
 
     private bool VerticalPlane(Collision collision)

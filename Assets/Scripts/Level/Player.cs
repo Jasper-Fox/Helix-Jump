@@ -3,12 +3,13 @@ using Enums;
 
 public class Player : MonoBehaviour
 {
-    private const string _numberOfPassedPlatforms = "numberOfPassedPlatforms";
+    private const string NumberOfPassedPlatformsKey = "numberOfPassedPlatforms";
     
     public float MaxSpeed;
     public float BounceStrength;
     public Rigidbody rb;
     public Game Game;
+    [SerializeField] internal AudioSource _soundControl;
     
     internal int _numberOfSkippedPlatforms;
     internal float _speed;
@@ -19,10 +20,10 @@ public class Player : MonoBehaviour
 
     public int NumberOfPassedPlatforms
     {
-        get => PlayerPrefs.GetInt(_numberOfPassedPlatforms, 0);
+        get => PlayerPrefs.GetInt(NumberOfPassedPlatformsKey, 0);
         set
         {
-            PlayerPrefs.SetInt(_numberOfPassedPlatforms, value);
+            PlayerPrefs.SetInt(NumberOfPassedPlatformsKey, value);
             PlayerPrefs.Save();
         } 
     }

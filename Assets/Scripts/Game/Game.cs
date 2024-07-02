@@ -5,13 +5,13 @@ using UnityEngine.SceneManagement;
 public class Game : MonoBehaviour
 {
     private const string LevelIndexKey = "LevelIndex";
-    private const string _numberOfPassedPlatforms = "numberOfPassedPlatforms";
-    private const string _maxNumberOfPassedPlatforms = "maxNumberOfPassedPlatforms";
+    private const string MaxNumberOfPassedPlatformsKey = "maxNumberOfPassedPlatforms";
     
     [SerializeField] private Controls Controls;
     [SerializeField] private GameObject _winUI;
     [SerializeField] private GameObject _loseUI;
     [SerializeField] private GameObject _menuUI;
+    [SerializeField] private SoundControl _music;
     
     //текущее состояние которое может изминять только этот код
     public GameState CurrentState { get; private set; }
@@ -31,10 +31,10 @@ public class Game : MonoBehaviour
     
     public int MaxNumberOfPassedPlatforms
     {
-        get => PlayerPrefs.GetInt(_maxNumberOfPassedPlatforms, 0);
+        get => PlayerPrefs.GetInt(MaxNumberOfPassedPlatformsKey, 0);
         set
         {
-            PlayerPrefs.SetInt(_maxNumberOfPassedPlatforms, value);
+            PlayerPrefs.SetInt(MaxNumberOfPassedPlatformsKey, value);
             PlayerPrefs.Save();
         } 
     }
@@ -57,22 +57,34 @@ public class Game : MonoBehaviour
     {
         //проверка на то что смерть произошла во время игры
         if (CurrentState != GameState.Playing) return; 
+        
         CurrentState = GameState.Loss;
         
         //выключаем код отвечающий за управление
         Controls.enabled = false;
+        
         _loseUI.gameObject.SetActive(true);
+        
         SetRecord();
+        
+        _music._lerpMute = true;
     }
     
     public void playerWin()
     {
         if (CurrentState != GameState.Playing) return;
+        
         CurrentState = GameState.Won;
+        
         Controls.enabled = false;
+        
         _winUI.gameObject.SetActive(true);
+        
         LevelIndex++;
+        
         SetRecord();
+        
+        _music._lerpMute = true;
     }
 
     //Перезагружает сцену
@@ -83,7 +95,7 @@ public class Game : MonoBehaviour
 
     private void SetRecord()
     {
-       int numberOfPassedPlatforms = PlayerPrefs.GetInt(_numberOfPassedPlatforms, 0);
+       int numberOfPassedPlatforms = PlayerPrefs.GetInt("numberOfPassedPlatforms", 0);
        
        MaxNumberOfPassedPlatforms = Mathf.Max(numberOfPassedPlatforms, MaxNumberOfPassedPlatforms);
     }
