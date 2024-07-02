@@ -218,6 +218,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _platformGenerator: {fileID: 3048050370394376647}
+  _playerMaterial: {fileID: 2100000, guid: e160601391a819a4588070c6f0e31106, type: 2}
 --- !u!114 &3048050370394376647
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -175,8 +175,8 @@ RectTransform:
   m_Children:
   - {fileID: 463396772}
   - {fileID: 1616962755}
-  - {fileID: 1730048160}
   - {fileID: 1163381344}
+  - {fileID: 1730048160}
   m_Father: {fileID: 1472489431}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -928,7 +928,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 73
+    m_FontSize: 70
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 10
@@ -8316,10 +8316,10 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 73
+    m_FontSize: 70
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 7
     m_MaxSize: 103
     m_Alignment: 4
     m_AlignByGeometry: 0
