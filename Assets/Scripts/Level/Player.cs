@@ -59,7 +59,7 @@ public class Player : MonoBehaviour
     public void Bounce()
     {
         //фикс бага с застреванием на границе киллзоны сектора
-        if (Game.CurrentState == GameState.Playing)
+        if (Game.CurrentState == GameState.Playing || Game.CurrentState == GameState.Start)
             //сила вверх
             rb.velocity = new Vector3(0, BounceStrength, 0); 
     }

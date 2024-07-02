@@ -1,5 +1,4 @@
 using Enums;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Sector : MonoBehaviour
@@ -27,25 +26,17 @@ public class Sector : MonoBehaviour
 
         _currentPlatform._wasCollision = true;
 
-        if (_numberOfSkippedPlatforms > 1)
+        if (_numberOfSkippedPlatforms > 2 || CurrentType == SectorType.Good)
         {
-            _currentPlatform.DestroyPlatform(true);
+            if (_numberOfSkippedPlatforms > 2)
+                _currentPlatform.DestroyPlatform(true);
             player.Bounce();
 
             //говорим игроку чтобы больше не тормозил
             player.rb.drag = 0;
-            return;
         }
-
-        if (CurrentType == SectorType.Bad)
-            player.Die();
         else
-        {
-            player.Bounce();
-
-            //говорим игроку чтобы больше не тормозил
-            player.rb.drag = 0;
-        }
+            player.Die();
     }
 
     private bool VerticalPlane(Collision collision)

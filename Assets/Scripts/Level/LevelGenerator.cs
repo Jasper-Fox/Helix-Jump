@@ -132,7 +132,6 @@ public class LevelGenerator : MonoBehaviour
             //Случайный поворот платформы по Y
             Quaternion platformRotation = Quaternion.Euler(0, RandomRange(random, 0, 360), 0);
             currentPlatform.transform.localRotation = platformRotation;
-            Debug.Log(currentPlatform.transform.localRotation);
         }
     }
 

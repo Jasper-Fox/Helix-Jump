@@ -7,6 +7,7 @@
     {
         Playing,
         Won,
-        Loss
+        Loss,
+        Start
     }
 }

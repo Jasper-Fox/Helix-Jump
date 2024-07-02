@@ -10,7 +10,7 @@ public class LevelCounter : MonoBehaviour
     void Start()
     {
         Text _nextLevelScoreboardText = _nextLevelScoreboard.GetComponent<Text>();
-        
+
         _text.text = (_game.LevelIndex + 1).ToString();
         _nextLevelScoreboardText.text = (_game.LevelIndex + 2).ToString();
     }
