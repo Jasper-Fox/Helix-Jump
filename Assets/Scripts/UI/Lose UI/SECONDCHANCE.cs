@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using Enums;
 
 public class SECONDCHANCE : MonoBehaviour
 {
@@ -16,5 +17,6 @@ public class SECONDCHANCE : MonoBehaviour
     {
         _soundControl.Click();
         _player.Reborn();
+        _player._currentPlatform._platformGenerator.ConvertToGoodPlatform();
     }
 }

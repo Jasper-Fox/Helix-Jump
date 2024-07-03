@@ -9,16 +9,16 @@ public class PlatformGenerator : MonoBehaviour
     private const int MaxStateSectorIndex = 1000;
 
     [SerializeField] private GameObject _sector;
-    
+
     [SerializeField] internal Sector[] _thisPlatformSectors = new Sector[SectorsNumber];
 
     internal int _levelIndex;
-    
+
     private bool _wasCollision;
     private Random _random;
     private float ratioOfGoodToBadPlatforms;
     private float holeRatio;
-    
+
     /// <summary>
     /// Строит платформу в данном месте данного типа из секторов
     /// </summary>
@@ -59,7 +59,7 @@ public class PlatformGenerator : MonoBehaviour
 
             //переиминовываем его
             newSector.name = $"Sector ({i})";
-            
+
             //достаём из него компонент сектора
             Sector sector = newSector.GetComponent<Sector>();
 
@@ -72,7 +72,6 @@ public class PlatformGenerator : MonoBehaviour
 
     public void A(ref float a)
     {
-        
     }
 
     /// <summary>
@@ -193,11 +192,20 @@ public class PlatformGenerator : MonoBehaviour
 
     public void ConvertToNullPlatform()
     {
-        int holeСounter = 0;
-
         for (int i = 0; i < _thisPlatformSectors.Length; i++)
         {
             _thisPlatformSectors[i].CurrentType = SectorType.Null;
+            _thisPlatformSectors[i].ChooseSectorMesh();
+        }
+    }
+
+    public void ConvertToGoodPlatform()
+    {
+        for (int i = 0; i < _thisPlatformSectors.Length; i++)
+        {
+            if (_thisPlatformSectors[i].CurrentType != SectorType.Bad) continue;
+
+            _thisPlatformSectors[i].CurrentType = SectorType.Good;
             _thisPlatformSectors[i].ChooseSectorMesh();
         }
     }

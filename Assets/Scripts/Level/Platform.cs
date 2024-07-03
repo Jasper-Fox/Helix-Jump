@@ -4,7 +4,8 @@ using Random = System.Random;
 
 public class Platform : MonoBehaviour
 {
-    [SerializeField] private PlatformGenerator _platformGenerator;
+    [SerializeField] internal PlatformGenerator _platformGenerator;
+    
     [SerializeField] private Material _playerMaterial;
 
     internal bool _wasCollision;
