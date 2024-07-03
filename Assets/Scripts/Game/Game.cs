@@ -103,8 +103,25 @@ public class Game : MonoBehaviour
     public void StartPlay()
     {
         if (CurrentState != GameState.Start) return;
+        
         CurrentState = GameState.Playing;
+        
         Controls.enabled = true; 
+        
         _menuUI.gameObject.SetActive(false);
+    }
+    
+    public void playerReborn()
+    {
+        if (CurrentState != GameState.Loss) return;
+        
+        CurrentState = GameState.Playing;
+        
+        Controls.enabled = true; 
+        
+        _loseUI.gameObject.SetActive(false);
+
+        _music._audioSource.volume = _music._actualSoundVolume;
+        _music._lerpMute = false;
     }
 }

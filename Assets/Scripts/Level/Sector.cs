@@ -11,10 +11,6 @@ public class Sector : MonoBehaviour
     public Mesh BadSectorMesh;
     public Material GoodSectorColor;
     public Material BadSectorColor;
-    [SerializeField] private AudioSource _audio;
-    [SerializeField] private AudioClip _collisionSound;
-    [SerializeField] private AudioClip _destructionSound;
-    
 
     internal bool _wasCollision;
     internal Platform _currentPlatform;
@@ -29,9 +25,6 @@ public class Sector : MonoBehaviour
         if (CurrentType == SectorType.Null) return;
         
         _currentPlatform._wasCollision = true;
-
-        _audio.volume = player._soundControl.volume;
-        _audio.mute = player._soundControl.mute;
         
         if (_numberOfSkippedPlatforms > 2 || CurrentType == SectorType.Good)
         {
@@ -39,10 +32,10 @@ public class Sector : MonoBehaviour
             {
                 _currentPlatform.DestroyPlatform(true);
                 
-                _audio.PlayOneShot(_destructionSound);
+                player._soundControl.Destruction();
             }
             else
-                _audio.PlayOneShot(_collisionSound);
+                player._soundControl.Collision();
                 
             player.Bounce();
 
@@ -51,7 +44,7 @@ public class Sector : MonoBehaviour
         }
         else
         {
-            _audio.PlayOneShot(_collisionSound);
+            player._soundControl.Collision();
 
             player.Die();
         }

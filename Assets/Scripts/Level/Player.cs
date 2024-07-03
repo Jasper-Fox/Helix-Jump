@@ -9,12 +9,12 @@ public class Player : MonoBehaviour
     public float BounceStrength;
     public Rigidbody rb;
     public Game Game;
-    [SerializeField] internal AudioSource _soundControl;
+    [SerializeField] internal SoundControl _soundControl;
     
     internal int _numberOfSkippedPlatforms;
     internal float _speed;
     internal Platform _currentPlatform;
-    
+
     private float BrakingForce;
     private Vector3 _lastPosition;
 
@@ -72,14 +72,19 @@ public class Player : MonoBehaviour
         
         //откдючает силу на всякий случай
         rb.velocity = Vector3.zero;
-
-        //Обнуляет счетчик очков
-        NumberOfPassedPlatforms = 0;
     }
 
     public void Win()
     {
         Game.playerWin();
+        
         rb.velocity = Vector3.zero;
+    }
+
+    public void Reborn()
+    {
+        Game.playerReborn();
+        
+        rb.velocity = new Vector3(0, BounceStrength, 0);
     }
 }
