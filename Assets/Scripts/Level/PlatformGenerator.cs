@@ -12,12 +12,15 @@ public class PlatformGenerator : MonoBehaviour
 
     [SerializeField] internal Sector[] _thisPlatformSectors = new Sector[SectorsNumber];
 
-    internal int _levelIndex;
-
+    private static int _levelIndex;
     private bool _wasCollision;
     private Random _random;
-    private float ratioOfGoodToBadPlatforms;
     private float holeRatio;
+
+    private void Awake()
+    {
+        _levelIndex = PlayerPrefs.GetInt("LevelIndex");
+    }
 
     /// <summary>
     /// Строит платформу в данном месте данного типа из секторов
@@ -26,11 +29,10 @@ public class PlatformGenerator : MonoBehaviour
     /// <param name="levelIndex"></param>
     /// <param name="platform"></param>
     /// <param name="currentType"></param>
-    private void PlatformGeneration(Random random, int levelIndex, GameObject platform, PlatformType currentType)
+    private void PlatformGeneration(Random random, GameObject platform, PlatformType currentType)
     {
         int holeСounter = 0;
         _random = random;
-        _levelIndex = levelIndex;
 
         //заполняем все сектора(на 2 цикла больше чтобы повторно проверить сектора 0 и 1 на наличее лишних отверстий)
         for (int i = 0; i < _thisPlatformSectors.Length + 2; i++)
@@ -63,15 +65,14 @@ public class PlatformGenerator : MonoBehaviour
             //достаём из него компонент сектора
             Sector sector = newSector.GetComponent<Sector>();
 
+            //говорим сектору что это его платформа(оптимизации игрового процесса ради)
+            sector._currentPlatform = platform.GetComponent<Platform>();
+
             //засовываем его в массим для проверки колизии
             _thisPlatformSectors[i] = sector;
         }
 
         SatSectorType(currentType, _thisPlatformSectors[thisPlatformSectorsIndex], i, ref holeСounter);
-    }
-
-    public void A(ref float a)
-    {
     }
 
     /// <summary>
@@ -185,20 +186,28 @@ public class PlatformGenerator : MonoBehaviour
     /// <param name="levelIndex"></param>
     /// <param name="platform"></param>
     /// <param name="currentType"></param>
-    public void BuildPlatform(Random random, int levelIndex, GameObject platform, PlatformType currentType)
+    public void BuildPlatform(Random random, GameObject platform, PlatformType currentType)
     {
-        PlatformGeneration(random, levelIndex, platform, currentType);
+        PlatformGeneration(random, platform, currentType);
     }
 
+    /// <summary>
+    /// Делает все сектора нулевыми
+    /// </summary>
     public void ConvertToNullPlatform()
     {
         for (int i = 0; i < _thisPlatformSectors.Length; i++)
         {
+            if (_thisPlatformSectors[i].CurrentType == SectorType.Null) continue;
+
             _thisPlatformSectors[i].CurrentType = SectorType.Null;
             _thisPlatformSectors[i].ChooseSectorMesh();
         }
     }
 
+    /// <summary>
+    /// Делает все сектора хорошими
+    /// </summary>
     public void ConvertToGoodPlatform()
     {
         for (int i = 0; i < _thisPlatformSectors.Length; i++)

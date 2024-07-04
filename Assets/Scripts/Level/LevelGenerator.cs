@@ -66,7 +66,7 @@ public class LevelGenerator : MonoBehaviour
 
     private void CalculateDifficulty()
     {
-        _difficulty = Game.LevelIndex + 5;
+        _difficulty += Game.LevelIndex;
     }
 
     /// <summary>
@@ -119,7 +119,7 @@ public class LevelGenerator : MonoBehaviour
         {
             currentPlatform.name = "Start";
 
-            platformGenerator.BuildPlatform(random, Game.LevelIndex, currentPlatform, PlatformType.Start);
+            platformGenerator.BuildPlatform(random, currentPlatform, PlatformType.Start);
 
             currentPlatform.transform.localRotation = new Quaternion();
         }
@@ -127,7 +127,7 @@ public class LevelGenerator : MonoBehaviour
         {
             currentPlatform.name = $"Platform ({i})";
 
-            platformGenerator.BuildPlatform(random, Game.LevelIndex, currentPlatform, PlatformType.Bace);
+            platformGenerator.BuildPlatform(random, currentPlatform, PlatformType.Bace);
 
             //Случайный поворот платформы по Y
             Quaternion platformRotation = Quaternion.Euler(0, RandomRange(random, 0, 360), 0);

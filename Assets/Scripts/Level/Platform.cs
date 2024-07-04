@@ -1,6 +1,5 @@
 using UnityEngine;
 using Unity.VisualScripting;
-using Random = System.Random;
 
 public class Platform : MonoBehaviour
 {
@@ -10,8 +9,6 @@ public class Platform : MonoBehaviour
 
     internal bool _wasCollision;
 
-    private Random _random;
-
     private void OnTriggerEnter(Collider other)
     {
         //если в колайдер вошел игрок то ТРУ и ссылку на компонент в плеер
@@ -19,23 +16,17 @@ public class Platform : MonoBehaviour
 
         //записываем эту платформу в текущую игрка 
         player._currentPlatform = this;
+        
         _wasCollision = false;
-
-        //записываем эту платформу в текущую всех секторов 
-        for (int i = 0; i < _platformGenerator._thisPlatformSectors.Length; i++)
-        {
-            if (_platformGenerator._thisPlatformSectors[i] == null) return;
-
-            _platformGenerator._thisPlatformSectors[i]._currentPlatform = this;
-            _platformGenerator._thisPlatformSectors[i]._numberOfSkippedPlatforms = player._numberOfSkippedPlatforms;
-        }
+        
+        Sector._numberOfSkippedPlatforms = player._numberOfSkippedPlatforms;
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (!other.TryGetComponent(out Player player)) return;
 
-        player.NumberOfPassedPlatforms += _platformGenerator._levelIndex + 1;
+        player.NumberOfPassedPlatforms += PlayerPrefs.GetInt("LevelIndex") + 1;
 
         //если было столкновение обнуляет счетчик
         if (_wasCollision)
@@ -48,14 +39,18 @@ public class Platform : MonoBehaviour
 
         DestroyPlatform();
     }
-
+    
+    /// <summary>
+    /// Разрушает платформу
+    /// </summary>
+    /// <param name="isHit"> При значении "true", сектора разлетаются вниз, как при ударе</param>
     public void DestroyPlatform(bool isHit = false)
     {
         for (int i = 0; i < _platformGenerator._thisPlatformSectors.Length; i++)
         {
-            var ImpactStrength = UnityEngine.Random.Range(4, 12);
-            var RachletStrength = UnityEngine.Random.Range(6, 12);
-
+            var impactStrength = Random.Range(4, 12);
+            var scatteringStrength = Random.Range(6, 12);
+            
             Rigidbody rigidbody = _platformGenerator._thisPlatformSectors[i].GameObject().GetComponent<Rigidbody>();
             Collider collider = _platformGenerator._thisPlatformSectors[i].GameObject().GetComponent<Collider>();
             Transform transform = _platformGenerator._thisPlatformSectors[i].GameObject().transform;
@@ -63,24 +58,27 @@ public class Platform : MonoBehaviour
             collider.isTrigger = true;
             rigidbody.isKinematic = false;
 
+            //получаем вектор из цента встороны(из-за начального разварота сектора от соответствует вектору вниз 
             Vector3 direction = transform.TransformDirection(Vector3.down);
             Vector3 torqueDirection = transform.TransformDirection(Vector3.right);
 
             if (isHit)
             {
                 torqueDirection = transform.TransformDirection(Vector3.left);
-                ImpactStrength *= -1;
-                RachletStrength = (int)(RachletStrength * 0.5);
+                impactStrength *= -1;
+                scatteringStrength = (int)(scatteringStrength * 0.5);
 
                 _platformGenerator._thisPlatformSectors[i].GameObject().GetComponent<Renderer>().sharedMaterial =
                     _playerMaterial;
             }
+            
+            Vector3 forceAngle = new Vector3(scatteringStrength * direction.x, direction.y + impactStrength,
+                scatteringStrength * direction.z);
 
-
-            Vector3 forceAngle = new Vector3(RachletStrength * direction.x, direction.y + ImpactStrength,
-                RachletStrength * direction.z);
-
+            //Добавляем момент вращения секторам
             rigidbody.AddTorque(torqueDirection, ForceMode.Impulse);
+            
+            //Придаём импульс
             rigidbody.AddForce(forceAngle, ForceMode.Impulse);
         }
     }

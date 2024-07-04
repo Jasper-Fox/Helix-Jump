@@ -14,15 +14,15 @@ public class Sector : MonoBehaviour
 
     internal bool _wasCollision;
     internal Platform _currentPlatform;
-    internal int _numberOfSkippedPlatforms;
+    internal static int _numberOfSkippedPlatforms;
     
     private void OnCollisionEnter(Collision collision)
     {
         // проверка на наличее у столкнувшегося объекта компонента Плеер,
         // при его наличии: ТРУ и в рлеер ссылка
+        // и вцелом проверки считать ли столкновение за столкновение
         if (!collision.collider.TryGetComponent(out Player player)) return;
-        if (!VerticalPlane(collision)) return;
-        if (CurrentType == SectorType.Null) return;
+        if (!HorizontalPlane(collision)) return;
         
         _currentPlatform._wasCollision = true;
         
@@ -50,7 +50,12 @@ public class Sector : MonoBehaviour
         }
     }
 
-    private bool VerticalPlane(Collision collision)
+    /// <summary>
+    /// Проверяет горизонтальная ли плоскость столкновения с игроком
+    /// </summary>
+    /// <param name="collision"></param>
+    /// <returns></returns>
+    private bool HorizontalPlane(Collision collision)
     {
         //вектор из точки контакта, паралельнй нормали плоскости контакта длинной 1
         Vector3 normal = -collision.contacts[0].normal.normalized;
@@ -60,7 +65,7 @@ public class Sector : MonoBehaviour
         //чем больше несовпадение тем меньше значение (тк cos)
         float dot = Vector3.Dot(normal, Vector3.up);
 
-        //разрешаем прыжок только при отклонении плоскости на 60'
+        //разрешаем прыжок при отклонении плоскости столкновения не больше чем на 60'
         if (dot >= MaximumNormalVectorSlope)
             return true;
         return false;

@@ -18,8 +18,11 @@ public class CameraFolow : MonoBehaviour
     {
         //чтобы небыло ошибок исключаем отсутствие значения в поле CurrentPlatform 
         if (Player._currentPlatform == null) return;
+        
         Vector3 targetPosition = StartCameraPosition + Player._currentPlatform.transform.position;
+        
         float cameraSpeed = new float();
+        
         cameraSpeed = CameraAcceleration(cameraSpeed);
 
         //MoveTowards: из A в B со скоростью C
