@@ -68,7 +68,7 @@ public class Player : MonoBehaviour
     public void Die()
     {
         //сообщает игре что игрок умер
-        Game.playerDied();
+        Game.PlayerDied();
         
         //откдючает силу на всякий случай
         rb.velocity = Vector3.zero;
@@ -76,14 +76,14 @@ public class Player : MonoBehaviour
 
     public void Win()
     {
-        Game.playerWin();
+        Game.PlayerWin();
         
         rb.velocity = Vector3.zero;
     }
 
     public void Reborn()
     {
-        Game.playerReborn();
+        Game.PlayerReborn();
         
         rb.velocity = new Vector3(0, BounceStrength, 0);
     }

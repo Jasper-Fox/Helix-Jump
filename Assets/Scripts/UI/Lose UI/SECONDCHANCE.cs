@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.UI;
-using Enums;
 
 public class SECONDCHANCE : MonoBehaviour
 {
