@@ -1,3 +1,4 @@
+using System;
 using Enums;
 using UnityEngine;
 
@@ -11,11 +12,12 @@ public class Sector : MonoBehaviour
     public Mesh BadSectorMesh;
     public Material GoodSectorColor;
     public Material BadSectorColor;
+    [SerializeField] internal Renderer _renderer;
 
     internal bool _wasCollision;
     internal Platform _currentPlatform;
     internal static int _numberOfSkippedPlatforms;
-    
+
     private void OnCollisionEnter(Collision collision)
     {
         // проверка на наличее у столкнувшегося объекта компонента Плеер,

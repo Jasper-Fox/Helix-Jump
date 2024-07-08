@@ -1,13 +1,59 @@
+using Enums;
 using UnityEngine;
 using Unity.VisualScripting;
+using UnityEngine.Rendering;
 
 public class Platform : MonoBehaviour
 {
-    [SerializeField] internal PlatformGenerator _platformGenerator;
+    private const float DEALY = 0.4f;
+    private const float FADES_SPEED = 4;
     
+    [SerializeField] internal PlatformGenerator _platformGenerator;
+
     [SerializeField] private Material _playerMaterial;
 
     internal bool _wasCollision;
+
+    private bool _isFades;
+    private float _timer;
+
+    private void Update()
+    {
+        if (!_isFades) return;
+        
+        if (Timer()) return;
+        
+        FadesPlatformBeforDestraction();
+    }
+
+    private void FadesPlatformBeforDestraction()
+    {
+        foreach (var sector in _platformGenerator._thisPlatformSectors)
+        {
+            if(sector.CurrentType == SectorType.Null) continue;
+
+            sector._renderer.shadowCastingMode = ShadowCastingMode.Off;
+            
+            var color = sector._renderer.material.color;
+            
+            color.a -= Time.deltaTime * FADES_SPEED;
+            
+            sector._renderer.material.color = color;
+            
+            if (color.a <= 0) _isFades = false;
+        }
+    }
+
+    private bool Timer()
+    {
+        if (_timer < DEALY)
+        {
+            _timer += Time.deltaTime;
+            return true;
+        }
+
+        return false;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -16,9 +62,9 @@ public class Platform : MonoBehaviour
 
         //записываем эту платформу в текущую игрка 
         player._currentPlatform = this;
-        
+
         _wasCollision = false;
-        
+
         Sector._numberOfSkippedPlatforms = player._numberOfSkippedPlatforms;
     }
 
@@ -39,7 +85,7 @@ public class Platform : MonoBehaviour
 
         DestroyPlatform();
     }
-    
+
     /// <summary>
     /// Разрушает платформу
     /// </summary>
@@ -50,7 +96,7 @@ public class Platform : MonoBehaviour
         {
             var impactStrength = Random.Range(4, 12);
             var scatteringStrength = Random.Range(6, 12);
-            
+
             Rigidbody rigidbody = _platformGenerator._thisPlatformSectors[i].GameObject().GetComponent<Rigidbody>();
             Collider collider = _platformGenerator._thisPlatformSectors[i].GameObject().GetComponent<Collider>();
             Transform transform = _platformGenerator._thisPlatformSectors[i].GameObject().transform;
@@ -71,15 +117,17 @@ public class Platform : MonoBehaviour
                 _platformGenerator._thisPlatformSectors[i].GameObject().GetComponent<Renderer>().sharedMaterial =
                     _playerMaterial;
             }
-            
+
             Vector3 forceAngle = new Vector3(scatteringStrength * direction.x, direction.y + impactStrength,
                 scatteringStrength * direction.z);
 
             //Добавляем момент вращения секторам
             rigidbody.AddTorque(torqueDirection, ForceMode.Impulse);
-            
+
             //Придаём импульс
             rigidbody.AddForce(forceAngle, ForceMode.Impulse);
+
+            _isFades = true;
         }
     }
 }
