@@ -18,6 +18,7 @@ public class SoundControl : MonoBehaviour
     [SerializeField] private AudioClip _click;
     [SerializeField] private AudioClip _collisionSound;
     [SerializeField] private AudioClip _destructionSound;
+    [SerializeField] private AudioClip _wonSound;
 
     internal bool _lerpMute;
     internal float _actualSoundVolume;
@@ -82,5 +83,10 @@ public class SoundControl : MonoBehaviour
     public void Destruction()
     {
         _audioSource.PlayOneShot(_destructionSound);
+    }
+
+    public void PlayWonSound()
+    {
+        _audioSource.PlayOneShot(_wonSound);
     }
 }

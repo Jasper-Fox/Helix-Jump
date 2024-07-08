@@ -12,6 +12,7 @@ public class Game : MonoBehaviour
     [SerializeField] private GameObject _loseUI;
     [SerializeField] private GameObject _menuUI;
     [SerializeField] private SoundControl _music;
+    [SerializeField] private WinEffect _winEffect;
 
     private bool _wasReborn;
 
@@ -82,6 +83,10 @@ public class Game : MonoBehaviour
         if (CurrentState != GameState.Playing) return;
 
         CurrentState = GameState.Won;
+        
+        _winEffect.Play();
+        _music.PlayWonSound();
+        _music._lerpMute = true;
 
         Controls.enabled = false;
 
@@ -90,8 +95,6 @@ public class Game : MonoBehaviour
         LevelIndex++;
 
         SetRecord();
-
-        _music._lerpMute = true;
     }
 
     //Перезагружает сцену
