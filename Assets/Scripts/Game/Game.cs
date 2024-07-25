@@ -70,9 +70,7 @@ public class Game : MonoBehaviour
         
         if (_wasReborn)
         {
-            _music._lerpMute = true;
-
-            _loseUI.gameObject.GetComponentInChildren<SECONDCHANCE>().gameObject.SetActive(false);
+            _loseUI.gameObject.GetComponentInChildren<AdTimer>().HideAdButtonAndMute();
         }
         
         SetRecord();
